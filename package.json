@@ -1,0 +1,41 @@
+{
+  "name": "the-orange-alliance-api",
+  "version": "0.0.1",
+  "description": "The Orange Alliance Library for Node.js",
+  "author": "The Orange Alliance, Josh Bacon",
+  "license": "MIT",
+  "keywords": [],
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "jest"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "dependencies": {
+    "@types/node": "^12.12.11",
+    "@types/node-fetch": "^2.5.4",
+    "@types/qs": "^6.9.0",
+    "axios": "^0.19.0",
+    "node-fetch": "^2.6.0",
+    "qs": "^6.9.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orange-alliance/the-orange-alliance-nodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/orange-alliance/the-orange-alliance-nodejs/issues"
+  },
+  "homepage": "https://github.com/orange-alliance/the-orange-alliance-nodejs#readme"
+}
