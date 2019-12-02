@@ -5,13 +5,17 @@
   "author": "The Orange Alliance, Josh Bacon",
   "license": "MIT",
   "keywords": [],
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "lib",
+  "types": "lib",
+  "module": "src",
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
     "test": "jest"
   },
+  "files": [
+    "lib"
+  ],
   "directories": {
     "lib": "lib",
     "test": "tests"
