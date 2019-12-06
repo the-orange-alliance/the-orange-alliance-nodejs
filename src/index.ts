@@ -463,6 +463,21 @@ export class API {
     );
   }
   /**
+   * Returns all matches a team participated in for a given season
+   * @param teamKey team number
+   * @param seasonKey the TOA season key
+   * @returns Array of all matches a team participated in
+   */
+  async getTeamMatches(
+    teamKey: string,
+    seasonKey: string
+  ): Promise<MatchParticipant[]> {
+    return this.arrToObj(
+      MatchParticipant,
+      await this.fetch(`/team/${teamKey}/matches/${seasonKey}`)
+    );
+  }
+  /**
    * Returns all awards a team received in for a given season.
    * @param teamKey team number
    * @param seasonKey the TOA season key
