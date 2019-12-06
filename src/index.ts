@@ -26,7 +26,7 @@ import { ISerializable } from "./models/ISerializable";
 
 const api_endpoint = "https://theorangealliance.org/api";
 
-class API {
+export class API {
   private _api_key: string;
   private _app_name: string;
   private _proxy: HttpsProxy | undefined;
@@ -64,12 +64,6 @@ class API {
         throw new Error(err);
       });
     return await data;
-
-    // return await axios.get(api_endpoint + url, {
-    //   headers: this.headers(),
-    //   proxy: this._proxy,
-    //   params: query
-    // });
   }
 
   private jsonToObj<T extends ISerializable>(
@@ -326,5 +320,3 @@ class API {
     return this.arrToObj(LeagueDiv, await this.fetch(`/league/divisions`));
   }
 }
-
-export default API;
