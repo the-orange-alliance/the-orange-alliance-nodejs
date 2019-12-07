@@ -80,7 +80,7 @@ export class API {
     response_data: string
   ): T[] {
     let res: [any] = JSON.parse(response_data);
-    let x = res.map(value => new c().fromJSON(res) as T);
+    let x = res.map(value => new c().fromJSON(value) as T);
     return x;
   }
 

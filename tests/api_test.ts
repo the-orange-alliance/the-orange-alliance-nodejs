@@ -1,4 +1,4 @@
-import API from "../src";
+import { API } from "../src";
 
 let api: API;
 
