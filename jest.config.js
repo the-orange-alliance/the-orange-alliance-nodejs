@@ -5,6 +5,8 @@ module.exports = {
     "**/tests/**/*.+(ts|tsx|js)",
     "**/?(*.)+(spec|test).+(ts|tsx|js)"
   ],
+  collectCoverage: true,
+  collectCoverageFrom: ["./src/index.ts"],
   transform: {
     "^.+\\.(ts|tsx)?$": "ts-jest"
   }
