@@ -13,6 +13,21 @@ enum EventType {
   Other = "OTHER"
 }
 
+const EventTypeMapping = {
+  "": EventType.Unknown,
+  LGCMP: EventType.LeagueChampionship,
+  LGMEET: EventType.LeagueMeet,
+  OFFSSN: EventType.OffSeason,
+  QUAL: EventType.Qualifier,
+  RCMP: EventType.RegionChampionship,
+  SCRIMMAGE: EventType.Scrimmage,
+  SPRING: EventType.SpringEvent,
+  SPRQUAL: EventType.SuperQual,
+  SPRRGNL: EventType.SuperRegional,
+  WRLDCMP: EventType.WorldChamp,
+  OTHER: EventType.Other
+};
+
 const EventTypeStringMapping = {
   [EventType.Unknown]: "",
   [EventType.LeagueChampionship]: "LGCMP",
@@ -28,14 +43,16 @@ const EventTypeStringMapping = {
   [EventType.Other]: "OTHER"
 };
 
-type EventTypeString = keyof typeof EventType;
-
-export const enumerate = (eventType: EventTypeString): EventType => {
-  return EventType[eventType];
+export const enumerate = (
+  eventType: keyof typeof EventTypeMapping
+): EventType => {
+  return EventTypeMapping[eventType];
 };
 
-export const stringify = (eventType: EventType): EventTypeString => {
-  return EventTypeStringMapping[eventType] as EventTypeString;
+export const stringify = (
+  eventType: EventType
+): keyof typeof EventTypeMapping => {
+  return EventTypeStringMapping[eventType] as keyof typeof EventTypeMapping;
 };
 
 export default EventType;

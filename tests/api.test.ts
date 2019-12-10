@@ -5,7 +5,7 @@ let api: API;
 jest.mock("node-fetch");
 beforeAll(() => {
   let api_key = process.env.TOA_KEY || "";
-  api = new API(api_key, "TOA-API-Test", true);
+  api = new API(api_key, "TOA-API-Test");
 });
 
 test("api_connection", async () => {
