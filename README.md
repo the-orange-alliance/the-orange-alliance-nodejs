@@ -12,7 +12,7 @@ Using the API is simple. Just create an instance of the API class, passing in yo
 From there, call any of the methods to retrieve the data from the API.
 
 ```ts
-import API from "toa-api";
+import { API } from "@the-orange-alliance/api";
 
 const api = new API("YOUR_AUTH_KEY_HERE", "Name your app");
 
@@ -26,3 +26,8 @@ api.getEvent("1920-FIM-KFQ").then(event => {
   console.log(event.eventName);
 });
 ```
+
+### API KEY
+
+Go to https://theorangealliance.org/account and click the `Generate an API key...` button.
+Use that key in the initialization for your API object.
