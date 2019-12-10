@@ -12,7 +12,6 @@ test("api_connection", async () => {
   mockFetch({ version: "1.0.0" });
   try {
     let version = await api.getAPI();
-    console.log(version);
     expect(version.split(".").length).toEqual(3);
   } catch (err) {
     fail(err);

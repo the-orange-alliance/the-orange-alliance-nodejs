@@ -1,4 +1,4 @@
-import { ISerializable } from './ISerializable';
+import { ISerializable } from "./ISerializable";
 
 export default class Award implements ISerializable {
   private _awardKey: string;
@@ -7,16 +7,16 @@ export default class Award implements ISerializable {
   private _displayOrder: number;
 
   constructor() {
-    this._awardKey = '';
-    this._awardType = '';
-    this._awardDescription = '';
+    this._awardKey = "";
+    this._awardType = "";
+    this._awardDescription = "";
     this._displayOrder = 0;
   }
 
   toJSON(): object {
     return {
       award_key: this.awardKey,
-      award_type: this.awardType,
+      award_type: parseInt(this.awardType),
       award_description: this.awardDescription,
       display_order: this.displayOrder
     };
@@ -25,7 +25,7 @@ export default class Award implements ISerializable {
   fromJSON(json: any): Award {
     const award: Award = new Award();
     award.awardKey = json.award_key;
-    award.awardType = json.award_type;
+    award.awardType = "" + json.award_type;
     award.awardDescription = json.award_description;
     award.displayOrder = json.display_order;
     return award;
