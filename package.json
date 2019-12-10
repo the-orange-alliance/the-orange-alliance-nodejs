@@ -24,6 +24,7 @@
     "@types/node": "^12.12.11",
     "@types/node-fetch": "^2.5.4",
     "@types/qs": "^6.9.0",
+    "https-proxy-agent": "^3.0.1",
     "node-fetch": "^2.6.0",
     "qs": "^6.9.1"
   },
