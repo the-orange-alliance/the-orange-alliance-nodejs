@@ -10,6 +10,7 @@
   "module": "src",
   "scripts": {
     "build": "tsc",
+    "build:docs": "typedoc --mode modules --out docs/ src/",
     "prepare": "npm run build",
     "test": "jest"
   },
@@ -32,6 +33,7 @@
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
+    "typedoc": "^0.15.4",
     "typescript": "^3.7.2"
   },
   "repository": {
