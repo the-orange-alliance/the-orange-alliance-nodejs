@@ -5,6 +5,11 @@ import AwardRecipient from "./AwardRecipient";
 import EventParticipant from "./EventParticipant";
 import Alliance from "./Alliance";
 import EventType, { stringify, enumerate } from "./types/EventType";
+import {
+  DataSource,
+  dataSourceToNumber,
+  numberToDataSource
+} from "./types/DataSource";
 
 export default class Event implements ISerializable {
   private _eventKey: string;
@@ -35,6 +40,7 @@ export default class Event implements ISerializable {
   private _advanceEvent: string;
   private _teamCount: number;
   private _matchCount: number;
+  private _dataSource: DataSource;
 
   // Supplemental fields that are not crucial to the model
   private _matches: Match[];
@@ -72,6 +78,7 @@ export default class Event implements ISerializable {
     this._advanceEvent = "";
     this._teamCount = -1;
     this._matchCount = -1;
+    this._dataSource = DataSource.Unknown;
 
     this._matches = [];
     this._rankings = [];
@@ -106,7 +113,23 @@ export default class Event implements ISerializable {
       alliance_count: this.allianceCount,
       field_count: this.fieldCount,
       advance_spots: this.advanceSpots,
-      advance_event: this.advanceEvent
+      advance_event: this.advanceEvent,
+      data_source: dataSourceToNumber(this.dataSource),
+      matches: this.matches
+        ? this.matches.map((val: Match) => val.toJSON())
+        : undefined,
+      rankings: this.rankings
+        ? this.rankings.map((val: Ranking) => val.toJSON())
+        : undefined,
+      awards: this.awards
+        ? this.awards.map((val: AwardRecipient) => val.toJSON())
+        : undefined,
+      teams: this.teams
+        ? this.teams.map((val: EventParticipant) => val.toJSON())
+        : undefined,
+      alliances: this.alliances
+        ? this.alliances.map((val: Alliance) => val.toJSON())
+        : undefined
     };
   }
 
@@ -138,6 +161,7 @@ export default class Event implements ISerializable {
     event.fieldCount = parseInt(json.field_count, 10);
     event.advanceSpots = parseInt(json.advance_spots, 10);
     event.advanceEvent = json.advance_event;
+    event.dataSource = numberToDataSource(json.data_source);
     event.teamCount =
       json.team_count && parseInt(json.team_count, 10) > -1
         ? parseInt(json.team_count, 10)
@@ -146,6 +170,21 @@ export default class Event implements ISerializable {
       json.match_count && parseInt(json.match_count, 10) > -1
         ? parseInt(json.match_count, 10)
         : -1;
+    event.matches = json.matches
+      ? json.matches.map((val: any) => new Match().fromJSON(val))
+      : [];
+    event.rankings = json.rankings
+      ? json.rankings.map((val: any) => new Ranking().fromJSON(val))
+      : [];
+    event.awards = json.awards
+      ? json.awards.map((val: any) => new AwardRecipient().fromJSON(val))
+      : [];
+    event.teams = json.teams
+      ? json.teams.map((val: any) => new EventParticipant().fromJSON(val))
+      : [];
+    event.alliances = json.alliances
+      ? json.alliances.map((val: any) => new Alliance().fromJSON(val))
+      : [];
     return event;
   }
 
@@ -408,6 +447,14 @@ export default class Event implements ISerializable {
 
   set alliances(value: Alliance[]) {
     this._alliances = value;
+  }
+
+  get dataSource(): DataSource {
+    return this._dataSource;
+  }
+
+  set dataSource(value: DataSource) {
+    this._dataSource = value;
   }
 
   fixDate(date: any): any {
