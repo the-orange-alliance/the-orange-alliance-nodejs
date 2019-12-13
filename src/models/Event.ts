@@ -29,7 +29,6 @@ export default class Event implements ISerializable {
   private _timeZone: string;
   private _isActive: boolean;
   private _isPublic: boolean;
-  private _activeTournamentLevel: string;
   private _allianceCount: number;
   private _fieldCount: number;
   private _advanceSpots: number;
@@ -67,7 +66,6 @@ export default class Event implements ISerializable {
     this._timeZone = "";
     this._isActive = false;
     this._isPublic = false;
-    this._activeTournamentLevel = "";
     this._allianceCount = 0;
     this._fieldCount = 0;
     this._advanceSpots = 0;
@@ -105,7 +103,6 @@ export default class Event implements ISerializable {
       time_zone: this.timeZone,
       is_active: this.isActive,
       is_public: this.isPublic,
-      active_tournament_level: this.activeTournamentLevel,
       alliance_count: this.allianceCount,
       field_count: this.fieldCount,
       advance_spots: this.advanceSpots,
@@ -137,7 +134,6 @@ export default class Event implements ISerializable {
     event.timeZone = json.time_zone;
     event.isActive = json.is_active;
     event.isPublic = json.is_public;
-    event.activeTournamentLevel = json.active_tournament_level;
     event.allianceCount = parseInt(json.alliance_count, 10);
     event.fieldCount = parseInt(json.field_count, 10);
     event.advanceSpots = parseInt(json.advance_spots, 10);
@@ -327,14 +323,6 @@ export default class Event implements ISerializable {
 
   set isPublic(value: boolean) {
     this._isPublic = value;
-  }
-
-  get activeTournamentLevel(): string {
-    return this._activeTournamentLevel;
-  }
-
-  set activeTournamentLevel(value: string) {
-    this._activeTournamentLevel = value;
   }
 
   get allianceCount(): number {
