@@ -15,13 +15,13 @@ export default class Event implements ISerializable {
   private _eventKey: string;
   private _seasonKey: string;
   private _regionKey: string;
-  private _leagueKey: string;
+  private _leagueKey: string | null;
   private _eventCode: string;
   private _eventTypeKey: EventType;
   private _eventRegionNumber: number;
   private _firstEventCode: string;
   private _divisionKey: number;
-  private _divisionName: string;
+  private _divisionName: string | null;
   private _eventName: string;
   private _startDate: string;
   private _endDate: string;
@@ -94,6 +94,7 @@ export default class Event implements ISerializable {
       region_key: this.regionKey,
       league_key: this.leagueKey,
       event_code: this.eventCode,
+      event_region_number: this.eventRegionNumber,
       event_type_key: stringify(this.eventTypeKey),
       division_key: this.divisionKey,
       division_name: this.divisionName,
@@ -115,21 +116,26 @@ export default class Event implements ISerializable {
       advance_spots: this.advanceSpots,
       advance_event: this.advanceEvent,
       data_source: dataSourceToNumber(this.dataSource),
-      matches: this.matches
-        ? this.matches.map((val: Match) => val.toJSON())
-        : undefined,
-      rankings: this.rankings
-        ? this.rankings.map((val: Ranking) => val.toJSON())
-        : undefined,
-      awards: this.awards
-        ? this.awards.map((val: AwardRecipient) => val.toJSON())
-        : undefined,
-      teams: this.teams
-        ? this.teams.map((val: EventParticipant) => val.toJSON())
-        : undefined,
-      alliances: this.alliances
-        ? this.alliances.map((val: Alliance) => val.toJSON())
-        : undefined
+      matches:
+        Array.isArray(this.matches) && this.matches.length === 0
+          ? undefined
+          : this.matches.map((val: Match) => val.toJSON()),
+      rankings:
+        Array.isArray(this.rankings) && this.rankings.length === 0
+          ? undefined
+          : this.rankings.map((val: Ranking) => val.toJSON()),
+      awards:
+        Array.isArray(this.awards) && this.awards.length === 0
+          ? undefined
+          : this.awards.map((val: AwardRecipient) => val.toJSON()),
+      teams:
+        Array.isArray(this.teams) && this.teams.length === 0
+          ? undefined
+          : this.teams.map((val: EventParticipant) => val.toJSON()),
+      alliances:
+        Array.isArray(this.alliances) && this.alliances.length === 0
+          ? undefined
+          : this.alliances.map((val: Alliance) => val.toJSON())
     };
   }
 
@@ -142,12 +148,12 @@ export default class Event implements ISerializable {
     event.eventCode = json.event_code;
     event.eventRegionNumber = parseInt(json.event_region_number, 10);
     event.divisionKey = json.division_key;
-    event.eventTypeKey = enumerate(json.eventTypeKey);
+    event.eventTypeKey = enumerate(json.event_type_key);
     event.firstEventCode = json.first_event_code;
     event.eventName = json.event_name;
     event.divisionName = json.division_name;
-    event.startDate = this.fixDate(json.start_date);
-    event.endDate = this.fixDate(json.end_date);
+    event.startDate = json.start_date;
+    event.endDate = json.end_date;
     event.weekKey = json.week_key;
     event.city = json.city;
     event.stateProv = json.state_prov;
@@ -212,11 +218,11 @@ export default class Event implements ISerializable {
     this._regionKey = value;
   }
 
-  get leagueKey(): string {
+  get leagueKey(): string | null {
     return this._leagueKey;
   }
 
-  set leagueKey(value: string) {
+  set leagueKey(value: string | null) {
     this._leagueKey = value;
   }
 
@@ -260,11 +266,11 @@ export default class Event implements ISerializable {
     this._divisionKey = value;
   }
 
-  get divisionName(): string {
+  get divisionName(): string | null {
     return this._divisionName;
   }
 
-  set divisionName(value: string) {
+  set divisionName(value: string | null) {
     this._divisionName = value;
   }
 
@@ -455,14 +461,6 @@ export default class Event implements ISerializable {
 
   set dataSource(value: DataSource) {
     this._dataSource = value;
-  }
-
-  fixDate(date: any): any {
-    if (date.endsWith("Z")) {
-      return date.substr(0, date.length - 1);
-    } else {
-      return date;
-    }
   }
 
   getLocation(venue: boolean = true): string {
