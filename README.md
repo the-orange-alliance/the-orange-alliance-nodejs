@@ -4,7 +4,7 @@ The Orange Alliance Library for Node.js
 
 > Note: Only supports the GET api currently.
 
-![GitHub issues](https://img.shields.io/github/issues/orange-alliance/the-orange-alliance-nodejs?style=for-the-badge)
+[![GitHub issues](https://img.shields.io/github/issues/orange-alliance/the-orange-alliance-nodejs?style=for-the-badge)](https://github.com/orange-alliance/the-orange-alliance-nodejs/issues)
 
 ## Usage
 

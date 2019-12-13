@@ -1,8 +1,8 @@
-import { ISerializable } from './ISerializable';
-import Ranking from './Ranking';
-import AwardRecipient from './AwardRecipient';
-import Event from './Event';
-import Media from './Media';
+import { ISerializable } from "./ISerializable";
+import Ranking from "./Ranking";
+import AwardRecipient from "./AwardRecipient";
+import Event from "./Event";
+import Media from "./Media";
 
 export default class Team implements ISerializable {
   private _teamKey: string;
@@ -26,20 +26,20 @@ export default class Team implements ISerializable {
   private _media: Media[];
 
   constructor() {
-    this._teamKey = '';
-    this._regionKey = '';
-    this._leagueKey = '';
+    this._teamKey = "";
+    this._regionKey = "";
+    this._leagueKey = "";
     this._teamNumber = 0;
-    this._teamNameShort = '';
-    this._teamNameLong = '';
-    this._robotName = '';
-    this._lastActive = '';
-    this._city = '';
-    this._stateProv = '';
+    this._teamNameShort = "";
+    this._teamNameLong = "";
+    this._robotName = "";
+    this._lastActive = "";
+    this._city = "";
+    this._stateProv = "";
     this._zipCode = 0;
-    this._country = '';
+    this._country = "";
     this._rookieYear = 0;
-    this._website = '';
+    this._website = "";
 
     this._events = [];
     this._rankings = [];
@@ -62,7 +62,7 @@ export default class Team implements ISerializable {
       zip_code: this.zipCode,
       country: this.country,
       rookie_year: this.rookieYear,
-      team_website: this.website
+      website: this.website
     };
   }
 
@@ -81,7 +81,7 @@ export default class Team implements ISerializable {
     team.zipCode = json.zip_code;
     team.country = json.country;
     team.rookieYear = json.rookie_year;
-    team.website = json.team_website;
+    team.website = json.website;
     return team;
   }
 
