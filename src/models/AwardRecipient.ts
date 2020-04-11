@@ -33,7 +33,7 @@ export default class AwardRecipient implements ISerializable {
       receiver_name: this.receiverName,
       award_name: this.awardName,
       award: this.award.awardKey.length > 0 ? this.award.toJSON() : new Award(),
-      team: this.team.teamKey.length > 0 ? this.team.toJSON() : new Award()
+      team: this.team.teamKey.length > 0 ? this.team.toJSON() : new Team()
     };
   }
 

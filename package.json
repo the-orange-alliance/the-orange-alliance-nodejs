@@ -10,8 +10,10 @@
   "module": "src",
   "scripts": {
     "build": "tsc",
+    "build:docs": "typedoc --mode modules --out docs/ src/",
     "prepare": "npm run build",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "files": [
     "lib"
@@ -32,6 +34,7 @@
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
+    "typedoc": "^0.15.4",
     "typescript": "^3.7.2"
   },
   "repository": {
@@ -41,5 +44,24 @@
   "bugs": {
     "url": "https://github.com/orange-alliance/the-orange-alliance-nodejs/issues"
   },
-  "homepage": "https://github.com/orange-alliance/the-orange-alliance-nodejs#readme"
+  "homepage": "https://github.com/orange-alliance/the-orange-alliance-nodejs#readme",
+  "jest": {
+    "roots": [
+      "<rootDir>/tests"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/tests/util/"
+    ],
+    "testMatch": [
+      "**/tests/**/*.+(ts|tsx|js)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/tests/util/"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)?$": "ts-jest"
+    }
+  }
 }
