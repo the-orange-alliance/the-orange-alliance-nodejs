@@ -185,7 +185,7 @@ test("from_json", () => {
   expect(e.advanceEvent).toEqual("");
 });
 
-test("get_full_event_name", () => {
+test("Get Event Full Name", () => {
   let e = new Event();
   e.eventName = "Michigan Championship - Warren";
   expect(e.fullEventName).toEqual("Michigan Championship - Warren");
@@ -195,7 +195,7 @@ test("get_full_event_name", () => {
   );
 });
 
-test("get_location", () => {
+test("Get Event Location", () => {
   let e = new Event();
   e.city = "Warren";
   e.country = "USA";
@@ -206,6 +206,16 @@ test("get_location", () => {
   expect(e.getLocation(false)).toEqual("Warren, USA");
   e.stateProv = "MI";
   expect(e.getLocation(false)).toEqual("Warren, MI, USA");
+});
+
+test("Get Event Date", () => {
+  let e = new Event();
+  e.startDate = "2020-01-05T00:00:00.000Z";
+  e.endDate = "2020-01-05T00:00:00.000Z";
+  expect(e.getDateString()).toEqual("Jan 5, 2020");
+  e.startDate = "2020-02-19T00:00:00.000Z";
+  e.endDate = "2020-02-20T00:00:00.000Z";
+  expect(e.getDateString()).toEqual("Feb 19 to Feb 20, 2020");
 });
 
 test("from_json_matches", () => {
@@ -261,7 +271,6 @@ test("from_json_teams", () => {
   team.teamNumber = 1;
   let t = new EventParticipant();
   t.team = team;
-  console.log(t);
   expect(e.teams).toEqual([]);
   e = new Event().fromJSON({
     teams: [t.toJSON()]

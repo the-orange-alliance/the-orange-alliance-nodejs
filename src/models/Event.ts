@@ -10,6 +10,7 @@ import {
   dataSourceToNumber,
   numberToDataSource
 } from "./types/DataSource";
+import { DateTime } from "luxon";
 
 export default class Event implements ISerializable {
   private _eventKey: string;
@@ -463,6 +464,27 @@ export default class Event implements ISerializable {
     this._dataSource = value;
   }
 
+  get fullEventName(): string {
+    return this._divisionName
+      ? this._eventName + " - " + this._divisionName + " Division"
+      : this._eventName;
+  }
+
+  getDateString(breakable: boolean = true): string {
+    // `\u00A0` is no-break space
+    const formatSpaces = (str: string) => breakable ? str : str.replace(/ /g, '\u00a0');
+    const startDate = DateTime.fromISO(this.startDate);
+    const endDate = DateTime.fromISO(this.endDate);
+
+    const endDateStr = endDate.toFormat('LLL d, yyyy');
+    if (this.startDate !== this.endDate) {
+      const startDateStr = startDate.toFormat('LLL d');
+      return `${formatSpaces(startDateStr)} to ${formatSpaces(endDateStr)}`;
+    } else {
+      return formatSpaces(endDateStr);
+    }
+  }
+
   getLocation(venue: boolean = true): string {
     return (
       (this.venue && venue ? this.venue + ", " : "") +
@@ -471,11 +493,5 @@ export default class Event implements ISerializable {
       (this.stateProv ? this.stateProv + ", " : "") +
       this.country
     );
-  }
-
-  get fullEventName(): string {
-    return this._divisionName
-      ? this._eventName + " - " + this._divisionName + " Division"
-      : this._eventName;
   }
 }
