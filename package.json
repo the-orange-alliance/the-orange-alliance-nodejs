@@ -23,6 +23,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "@types/luxon": "^1.22.0",
     "@types/node": "^12.12.11",
     "@types/node-fetch": "^2.5.4",
     "@types/qs": "^6.9.0",
