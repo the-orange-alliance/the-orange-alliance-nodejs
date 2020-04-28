@@ -2,7 +2,6 @@
 import fetch from "node-fetch";
 import * as qs from "qs";
 import HTTPHeaders from "./util/HTTPHeaders";
-import * as HttpsProxyAgent from "https-proxy-agent";
 
 import {
   Season,
@@ -24,7 +23,6 @@ import {
   LeagueDiv
 } from "./models";
 import { ISerializable } from "./models/ISerializable";
-import EventType from "./models/types/EventType";
 
 const api_endpoint = "https://theorangealliance.org/api";
 
@@ -37,23 +35,13 @@ export class API {
    *
    * @param api_key Api key from myTOA
    * @param application_name Set an application name that your requests will use.
-   * @param proxy True if proxy comes from HTTP_PROXY environment variable. Use a string to specify a proxy url to use.
    */
   constructor(
     api_key: string,
     application_name: string,
-    proxy?: string | boolean
   ) {
     this._api_key = api_key;
     this._app_name = application_name;
-    if (proxy === true) {
-      this._proxy = process.env.http_proxy;
-      if (!(this._proxy as string).match(/^https?:\/\//)) {
-        this._proxy = "http://" + this._proxy;
-      }
-    } else if (typeof proxy === "string") {
-      this._proxy = proxy;
-    }
   }
 
   headers(): HTTPHeaders {
@@ -80,14 +68,7 @@ export class API {
       query_params = "?" + query_params;
     }
 
-    // Proxy support
-    let agent = undefined;
-    if (this._proxy) {
-      agent = new HttpsProxyAgent(this._proxy);
-    }
-
     let data = fetch(api_endpoint + url + query_params, {
-      agent: agent,
       headers: this.headers()
     })
       .then(res => res.text())
