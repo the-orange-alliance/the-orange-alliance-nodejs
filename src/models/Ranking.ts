@@ -51,7 +51,7 @@ export default class Ranking implements ISerializable {
       rank: this.rank,
       rank_change: this.rankChange,
       opr: this.opr,
-      npopr: this.npOpr,
+      np_opr: this.npOpr,
       wins: this.wins,
       losses: this.losses,
       ties: this.ties,
