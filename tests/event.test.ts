@@ -378,6 +378,7 @@ test("get_event_rankings", async () => {
       rank: 1,
       rank_change: 0,
       opr: 63.7,
+      np_opr: 43.2,
       wins: 5,
       losses: 0,
       ties: 0,
