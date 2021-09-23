@@ -20,7 +20,7 @@ import {
   EventParticipant,
   Team,
   WebAnnouncement,
-  LeagueDiv
+  LeagueDiv,
 } from "./models";
 import { ISerializable } from "./models/ISerializable";
 
@@ -36,10 +36,7 @@ export class API {
    * @param api_key Api key from myTOA
    * @param application_name Set an application name that your requests will use.
    */
-  constructor(
-    api_key: string,
-    application_name: string,
-  ) {
+  constructor(api_key: string, application_name: string) {
     this._api_key = api_key;
     this._app_name = application_name;
   }
@@ -48,7 +45,7 @@ export class API {
     return {
       "Content-Type": "application/json",
       "X-TOA-Key": this._api_key,
-      "X-Application-Origin": this._app_name
+      "X-Application-Origin": this._app_name,
     };
   }
 
@@ -69,10 +66,10 @@ export class API {
     }
 
     let data = fetch(api_endpoint + url + query_params, {
-      headers: this.headers()
+      headers: this.headers(),
     })
-      .then(res => res.text())
-      .catch(err => {
+      .then((res: any) => res.text())
+      .catch((err: any) => {
         throw new Error(err);
       });
     return await data;
@@ -102,7 +99,7 @@ export class API {
     response_data: string
   ): T[] {
     let res: [any] = JSON.parse(response_data);
-    let x = res.map(value => new c().fromJSON(value) as T);
+    let x = res.map((value) => new c().fromJSON(value) as T);
     return x;
   }
 
@@ -204,12 +201,20 @@ export class API {
     league_key,
     region_key,
     season_key,
-    type
+    type,
+    start_date,
+    end_date,
+    between,
+    includeMatchCount,
   }: {
     league_key?: string;
     region_key?: string;
     season_key?: string;
     type?: string;
+    start_date?: string;
+    end_date?: string;
+    between?: boolean;
+    includeMatchCount?: boolean;
   } = {}): Promise<Event[]> {
     return this.arrToObj(
       Event,
@@ -217,7 +222,11 @@ export class API {
         league_key: league_key,
         region_key: region_key,
         season_key: season_key,
-        type: type
+        type: type,
+        start_date: start_date,
+        end_date: end_date,
+        between: between,
+        includeMatchCount: includeMatchCount,
       })
     );
   }
@@ -225,8 +234,15 @@ export class API {
    * Returns the amount of events in the database
    * @returns Number of events
    */
-  async getEventCount(): Promise<number> {
-    let x = await this.fetch("/event/size");
+  async getEventCount(
+    options: {
+      league_key?: string;
+      region_key?: string;
+      season_key?: string;
+      type?: string;
+    } = {}
+  ): Promise<number> {
+    let x = await this.fetch("/event/size", { ...options });
     let y: { result: number } = JSON.parse(x);
     return y.result;
   }
@@ -362,7 +378,7 @@ export class API {
       Match,
       await this.fetch(`/match/all/${seasonKey}`, {
         start: start,
-        count: count
+        count: count,
       })
     );
   }
@@ -370,8 +386,10 @@ export class API {
    * Returns the amount of matches in the current season database
    * @returns number of matches
    */
-  async getSeasonMatchCount(): Promise<number> {
-    let x = await this.fetch("/match/size");
+  async getSeasonMatchCount(
+    options: { season_key?: string; played?: boolean } = {}
+  ): Promise<number> {
+    let x = await this.fetch("/match/size", { ...options });
     let y: { result: number } = JSON.parse(x);
     return y.result;
   }
@@ -380,10 +398,17 @@ export class API {
    * @param type quals, elims, or all matches
    * @returns Match with the high score
    */
-  async getHighScoreMatch(type: "quals" | "elims" | "all"): Promise<Match> {
+  async getHighScoreMatch(
+    type: "quals" | "elims" | "all" | "single_team",
+    options: {
+      seasonKey?: string;
+      singleTeam?: boolean;
+      penalty?: boolean;
+    } = {}
+  ): Promise<Match> {
     return this.arrToObj(
       Match,
-      await this.fetch("/match/high-scores", { type: type })
+      await this.fetch("/match/high-scores", { type: type, ...options })
     )[0];
   }
   /**
@@ -423,15 +448,31 @@ export class API {
    * @todo Add queries
    * @returns Array of teams
    */
-  async getTeams(): Promise<Team[]> {
-    return this.arrToObj(Team, await this.fetch(`/team`));
+  async getTeams(
+    options: {
+      league_key?: string;
+      region_key?: string;
+      last_active?: string;
+      country?: string;
+      start?: number;
+      count?: number;
+    } = {}
+  ): Promise<Team[]> {
+    return this.arrToObj(Team, await this.fetch(`/team`, { ...options }));
   }
   /**
    * Returns the amount of teams in the database
    * @returns number of teams
    */
-  async getTeamCount(): Promise<number> {
-    let x = await this.fetch("/team/size");
+  async getTeamCount(
+    options: {
+      league_key?: string;
+      region_key?: string;
+      last_active?: string;
+      country?: string;
+    } = {}
+  ): Promise<number> {
+    let x = await this.fetch("/team/size", { ...options });
     let y: { result: number } = JSON.parse(x);
     return y.result;
   }
@@ -449,9 +490,12 @@ export class API {
    * @returns object with wins, losses, and ties
    */
   async getTeamWLT(
-    teamKey: string
+    teamKey: string,
+    options: { season_key?: string } = {}
   ): Promise<{ wins: number; losses: number; ties: number }> {
-    return JSON.parse(await this.fetch(`/team/${teamKey}/wlt`))[0];
+    return JSON.parse(
+      await this.fetch(`/team/${teamKey}/wlt`, { ...options })
+    )[0];
   }
   /**
    * Returns all events a team participated in for a given season.
@@ -539,10 +583,21 @@ export class API {
    * @param seasonKey the TOA season key
    * @returns the team specified
    */
-  async getSeasonTeam(teamKey: string, seasonKey: string): Promise<Team> {
+  async getSeasonTeam(
+    teamKey: string,
+    seasonKey: string,
+    options: {
+      league_key?: string;
+      region_key?: string;
+      last_active?: string;
+      country?: string;
+      start?: number;
+      count?: number;
+    } = {}
+  ): Promise<Team> {
     return this.arrToObj(
       Team,
-      await this.fetch(`/team/history/${seasonKey}/${teamKey}`)
+      await this.fetch(`/team/history/${seasonKey}/${teamKey}`, { ...options })
     )[0];
   }
 

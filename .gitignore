@@ -1,7 +1,7 @@
 node_modules
 .vscode
 .idea
-lib
+/lib
 .DS_Store
 coverage
 docs
