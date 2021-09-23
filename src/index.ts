@@ -68,8 +68,8 @@ export class API {
     let data = fetch(api_endpoint + url + query_params, {
       headers: this.headers(),
     })
-      .then((res) => res.text())
-      .catch((err) => {
+      .then((res: any) => res.text())
+      .catch((err: any) => {
         throw new Error(err);
       });
     return await data;
