@@ -1,6 +1,6 @@
 {
     "name": "@the-orange-alliance/api",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "The Orange Alliance Library for Node.js",
     "author": "The Orange Alliance, Josh Bacon",
     "license": "MIT",
@@ -12,12 +12,11 @@
         "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
         "build:docs": "typedoc --mode modules --out docs/ src/",
         "prepare": "npm run build",
-        "prepublishOnly": "npm test",
         "test": "jest",
         "test:watch": "jest --watch"
     },
     "files": [
-        "lib/**/*"
+        "lib"
     ],
     "directories": {
         "lib": "lib",
