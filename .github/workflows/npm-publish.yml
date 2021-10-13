@@ -44,7 +44,8 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - run: Publish
+      - name: Publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -69,6 +70,7 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - run: Publish
+      - name: Publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
