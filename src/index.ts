@@ -1,5 +1,5 @@
 // import axios from "axios";
-import fetch from "isomorphic-unfetch";
+import fetch from "cross-fetch";
 import * as qs from "qs";
 import HTTPHeaders from "./util/HTTPHeaders";
 
@@ -206,6 +206,7 @@ export class API {
         end_date,
         between,
         includeMatchCount,
+        includeTeamCount,
     }: {
         league_key?: string;
         region_key?: string;
@@ -215,6 +216,7 @@ export class API {
         end_date?: string;
         between?: boolean;
         includeMatchCount?: boolean;
+        includeTeamCount?: boolean;
     } = {}): Promise<Event[]> {
         return this.arrToObj(
             Event,
@@ -227,6 +229,7 @@ export class API {
                 end_date: end_date,
                 between: between,
                 includeMatchCount: includeMatchCount,
+                includeTeamCount: includeTeamCount,
             })
         );
     }
