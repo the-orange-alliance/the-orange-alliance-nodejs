@@ -50,7 +50,7 @@ export default class Event implements ISerializable {
   private _awards: AwardRecipient[];
   private _teams: EventParticipant[];
   private _alliances: Alliance[];
-  private _insights: { qualInsights: Insights, elimInsights: Insights };
+  private _insights: Insights[];
 
   constructor() {
     this._eventKey = "";
@@ -88,7 +88,7 @@ export default class Event implements ISerializable {
     this._awards = [];
     this._teams = [];
     this._alliances = [];
-    this._insights = {qualInsights: new Insights(), elimInsights: new Insights()};
+    this._insights = [];
   }
 
   toJSON(): object {
@@ -140,8 +140,10 @@ export default class Event implements ISerializable {
         Array.isArray(this.alliances) && this.alliances.length === 0
           ? undefined
           : this.alliances.map((val: Alliance) => val.toJSON()),
-      qual_insights: this.insights.qualInsights.toJSON(),
-      elim_insights: this.insights.elimInsights.toJSON(),
+      insights:
+        Array.isArray(this.insights) && this.insights.length === 0
+          ? undefined
+          : this.insights.map((val: Insights) => val.toJSON()),
     };
   }
 
@@ -197,8 +199,9 @@ export default class Event implements ISerializable {
     event.alliances = json.alliances
       ? json.alliances.map((val: any) => new Alliance().fromJSON(val))
       : [];
-    event.insights.qualInsights = new Insights().fromJSON(json.qual_insights);
-    event.insights.elimInsights = new Insights().fromJSON(json.elim_insights);
+    event.insights = json.insights
+      ? json.insights.map((val: any) => new Insights().fromJSON(val))
+      : [];
     return event;
   }
 
@@ -474,11 +477,11 @@ export default class Event implements ISerializable {
     this._dataSource = value;
   }
 
-  get insights(): { qualInsights: Insights; elimInsights: Insights } {
+  get insights(): Insights[] {
     return this._insights;
   }
 
-  set insights(value: { qualInsights: Insights; elimInsights: Insights }) {
+  set insights(value: Insights[]) {
     this._insights = value;
   }
 
