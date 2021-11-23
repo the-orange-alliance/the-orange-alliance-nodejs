@@ -80,7 +80,8 @@ export default class Match implements ISerializable {
       blue_tele_score: this.blueTeleScore,
       red_end_score: this.redEndScore,
       blue_end_score: this.blueEndScore,
-      video_url: this.videoURL
+      video_url: this.videoURL,
+      participants: this.participants.map((participant: MatchParticipant) => participant.toJSON())
     };
   }
 
