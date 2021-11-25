@@ -23,6 +23,8 @@ import {
     LeagueDiv,
 } from "./models";
 import { ISerializable } from "./models/ISerializable";
+import {getMatchDetailsType} from "./models/game-specifics/GameData";
+import {getInsightsType} from "./models/game-specifics/InsightsData";
 
 const api_endpoint = "https://theorangealliance.org/api";
 
@@ -322,8 +324,9 @@ export class API {
         eventKey: string,
         type?: "quals" | "elims"
     ): Promise<Insights[]> {
+        const seasonKey = eventKey.split('-')[0];
         return this.arrToObj(
-            Insights,
+            getInsightsType(seasonKey),
             await this.fetch(`/event/${eventKey}/insights`, { type })
         );
     }
@@ -443,8 +446,9 @@ export class API {
      * @returns Specified match details
      */
     async getMatchDetails(matchKey: string): Promise<MatchDetails> {
+        const seasonKey = matchKey.split('-')[0];
         return this.arrToObj(
-            MatchDetails,
+            getMatchDetailsType(seasonKey),
             await this.fetch(`/match/${matchKey}/details`)
         )[0];
     }

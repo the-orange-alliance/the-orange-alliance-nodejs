@@ -7,20 +7,25 @@ import RoverRuckusMatchDetails from "./1819/RoverRuckusMatchDetails";
 import SkystoneMatchDetails from "./1920/SkystoneMatchDetails";
 
 export function getMatchDetails(seasonKey: string): MatchDetails {
+  const matchDtlType = getMatchDetailsType(seasonKey);
+  return new matchDtlType();
+}
+
+export function getMatchDetailsType(seasonKey: string): typeof MatchDetails {
   switch (seasonKey) {
     case '1617':
-      return new VelocityVortexMatchDetails();
+      return VelocityVortexMatchDetails;
     case '1718':
-      return new RelicRecoveryMatchDetails();
+      return RelicRecoveryMatchDetails;
     case '1819':
-      return new RoverRuckusMatchDetails();
+      return RoverRuckusMatchDetails;
     case '1920':
-      return new SkystoneMatchDetails();
+      return SkystoneMatchDetails;
     case '2021':
-      return new UltimateGoalMatchDetails();
+      return UltimateGoalMatchDetails;
     case '2122':
-      return new FreightFrenzyMatchDetails();
+      return FreightFrenzyMatchDetails;
     default:
-      return new MatchDetails();
+      return MatchDetails;
   }
 }
