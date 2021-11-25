@@ -1,5 +1,5 @@
-import { ISerializable } from '../ISerializable';
-import MatchDetails from '../MatchDetails';
+import { ISerializable } from '../../ISerializable';
+import MatchDetails from '../../MatchDetails';
 
 export default class RoverRuckusMatchDetails extends MatchDetails implements ISerializable {
   private _redAutoLand: number;

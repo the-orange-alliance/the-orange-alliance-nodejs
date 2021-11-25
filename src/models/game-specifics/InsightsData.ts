@@ -1,6 +1,9 @@
 import Insights from '../Insights';
-import RelicRecoveryInsights from './RelicRecoveryInsights';
-import RoverRuckusInsights from './RoverRuckusInsights';
+import FreightFrenzyInsights from "./2122/FreightFrenzyInsights";
+import UltimateGoalInsights from "./2021/UltimateGoalInsights";
+import SkystoneInsights from "./1920/SkystoneInsights";
+import RelicRecoveryInsights from "./1718/RelicRecoveryInsights";
+import RoverRuckusInsights from "./1819/RoverRuckusInsights";
 
 export function getInsights(seasonKey: string): Insights {
   switch (seasonKey) {
@@ -10,6 +13,12 @@ export function getInsights(seasonKey: string): Insights {
       return new RelicRecoveryInsights();
     case '1819':
       return new RoverRuckusInsights();
+    case '1920':
+      return new SkystoneInsights();
+    case '2021':
+      return new UltimateGoalInsights();
+    case '2122':
+      return new FreightFrenzyInsights();
     default:
       return new Insights();
   }
