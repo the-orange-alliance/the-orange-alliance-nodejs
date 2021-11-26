@@ -333,7 +333,6 @@ export class API {
         const data = JSON.parse(
             await this.fetch(`/event/${eventKey}/insights`, { type })
         );
-        console.log(data);
 
         return data.map((insight: any) => insights.fromJSON(insight));
         // return this.arrToObj(
