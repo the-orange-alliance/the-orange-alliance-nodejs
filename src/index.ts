@@ -24,7 +24,7 @@ import {
 } from "./models";
 import { ISerializable } from "./models/ISerializable";
 import {getMatchDetailsType} from "./models/game-specifics/GameData";
-import {getInsightsType} from "./models/game-specifics/InsightsData";
+import {getInsights, getInsightsType} from "./models/game-specifics/InsightsData";
 
 const api_endpoint = "https://theorangealliance.org/api";
 
@@ -329,6 +329,28 @@ export class API {
             getInsightsType(seasonKey),
             await this.fetch(`/event/${eventKey}/insights`, { type })
         );
+    }
+    /**
+     * Returns all insights for that season.
+     * @param seasonKey the TOA season key to specify a season
+     * @param options Optional query parameters to narrow search
+     * @returns Object of Insights, where the key is the "Week Key" and the data is the averages for that "week"
+     */
+    async getSeasonInsights(
+      seasonKey: string,
+        options?: {
+          region_key: string,
+            type: 'elims' | 'quals',
+            single_team: 'included' | 'excluded' | 'only'
+        }
+    ): Promise<{ [key: string]: Insights }> {
+        const data = await this.fetch(`/insights/${seasonKey}`, options);
+        const returnData = {} as { [key: string]: Insights };
+        const type = getInsightsType(data);
+        for(const key in Object.keys(data)) {
+            returnData[key] = new type().fromJSON(data[key]);
+        }
+        return returnData;
     }
     /**
      * Returns all alliances for that event.
