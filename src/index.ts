@@ -346,9 +346,9 @@ export class API {
     ): Promise<{ [key: string]: Insights }> {
         const data = await this.fetch(`/insights/${seasonKey}`, options);
         const returnData = {} as { [key: string]: Insights };
-        const type = getInsightsType(data);
-        for(const key in Object.keys(data)) {
-            returnData[key] = new type().fromJSON(data[key]);
+        const type = getInsightsType(seasonKey);
+        for(const [key, value] of Object.entries(JSON.parse(data))) {
+            returnData[key] = new type().fromJSON(value);
         }
         return returnData;
     }
