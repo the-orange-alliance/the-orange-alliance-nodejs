@@ -1,6 +1,9 @@
 import { ISerializable } from "./ISerializable";
 import Match from "./Match";
-import { GameSpecificInsights } from "./game-specifics/InsightsData";
+import {
+    GameSpecificInsights,
+    getInsights,
+} from "./game-specifics/InsightsData";
 
 export default class Insights implements ISerializable {
     private _highScoreMatch: Match | null;
@@ -9,7 +12,6 @@ export default class Insights implements ISerializable {
     private _averageWinningMargin: number;
     private _averageMajorPenalties: number;
     private _averageMinorPenalties: number;
-    private _game: GameSpecificInsights | undefined;
 
     constructor() {
         this._highScoreMatch = null;
@@ -43,9 +45,6 @@ export default class Insights implements ISerializable {
         insights.averageWinningMargin = json.average_winning_margin;
         insights.averageMajorPenalties = json.average_major_penalty;
         insights.averageMinorPenalties = json.average_minor_penalty;
-        if ("game" in json) {
-            insights.game = json.game;
-        }
         return insights;
     }
 
@@ -95,13 +94,5 @@ export default class Insights implements ISerializable {
 
     set averageMinorPenalties(value: number) {
         this._averageMinorPenalties = value;
-    }
-
-    get game(): GameSpecificInsights | undefined {
-        return this._game;
-    }
-
-    set game(value: GameSpecificInsights | undefined) {
-        this._game = value;
     }
 }

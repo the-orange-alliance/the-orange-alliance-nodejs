@@ -10,28 +10,30 @@ export type GameSpecificInsights =
     | UltimateGoalInsights
     | SkystoneInsights
     | RelicRecoveryInsights
-    | RoverRuckusInsights;
+    | RoverRuckusInsights
+    | Insights;
 
 export function getInsights(seasonKey: string): Insights {
     const insightsType = getInsightsType(seasonKey);
-    return new insightsType();
+    return insightsType;
 }
 
-export function getInsightsType(seasonKey: string): typeof Insights {
+export function getInsightsType(seasonKey: string): GameSpecificInsights {
     switch (seasonKey) {
         // case '1617':
         //   return new VelocityVortexInsights();
         case "1718":
-            return RelicRecoveryInsights;
+            return new RelicRecoveryInsights();
         case "1819":
-            return RoverRuckusInsights;
+            return new RoverRuckusInsights();
         case "1920":
-            return SkystoneInsights;
+            return new SkystoneInsights();
         case "2021":
-            return UltimateGoalInsights;
+            return new UltimateGoalInsights();
         case "2122":
-            return FreightFrenzyInsights;
+            console.log("FreightFrenzy");
+            return new FreightFrenzyInsights();
         default:
-            return Insights;
+            return new Insights();
     }
 }

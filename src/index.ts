@@ -23,8 +23,12 @@ import {
     LeagueDiv,
 } from "./models";
 import { ISerializable } from "./models/ISerializable";
-import {getMatchDetailsType} from "./models/game-specifics/GameData";
-import {getInsights, getInsightsType} from "./models/game-specifics/InsightsData";
+import { getMatchDetailsType } from "./models/game-specifics/GameData";
+import {
+    GameSpecificInsights,
+    getInsights,
+    getInsightsType,
+} from "./models/game-specifics/InsightsData";
 
 const api_endpoint = "https://theorangealliance.org/api";
 
@@ -223,7 +227,7 @@ export class API {
         type?: string;
         start_date?: string;
         end_date?: string;
-        start_date_query?: 'equals' | 'before' | 'after';
+        start_date_query?: "equals" | "before" | "after";
         between?: boolean;
         includeMatchCount?: boolean;
         includeTeamCount?: boolean;
@@ -323,12 +327,19 @@ export class API {
     async getEventInsights(
         eventKey: string,
         type?: "quals" | "elims"
-    ): Promise<Insights[]> {
-        const seasonKey = eventKey.split('-')[0];
-        return this.arrToObj(
-            getInsightsType(seasonKey),
+    ): Promise<GameSpecificInsights[]> {
+        const seasonKey = eventKey.split("-")[0];
+        const insights = getInsightsType(seasonKey);
+        const data = JSON.parse(
             await this.fetch(`/event/${eventKey}/insights`, { type })
         );
+        console.log(data);
+
+        return data.map((insight: any) => insights.fromJSON(insight));
+        // return this.arrToObj(
+        //     typeof getInsightsType(seasonKey),
+
+        // );
     }
     /**
      * Returns all insights for that season.
@@ -337,18 +348,18 @@ export class API {
      * @returns Object of Insights, where the key is the "Week Key" and the data is the averages for that "week"
      */
     async getSeasonInsights(
-      seasonKey: string,
+        seasonKey: string,
         options?: {
-          region_key?: string,
-            type?: 'elims' | 'quals',
-            single_team?: 'included' | 'excluded' | 'only'
+            region_key?: string;
+            type?: "elims" | "quals";
+            single_team?: "included" | "excluded" | "only";
         }
     ): Promise<{ [key: string]: Insights }> {
         const data = await this.fetch(`/insights/${seasonKey}`, options);
         const returnData = {} as { [key: string]: Insights };
-        const type = getInsightsType(seasonKey);
-        for(const [key, value] of Object.entries(JSON.parse(data))) {
-            returnData[key] = new type().fromJSON(value);
+        const insights = getInsightsType(seasonKey);
+        for (const [key, value] of Object.entries(JSON.parse(data))) {
+            returnData[key] = insights.fromJSON(value);
         }
         return returnData;
     }
@@ -468,7 +479,7 @@ export class API {
      * @returns Specified match details
      */
     async getMatchDetails(matchKey: string): Promise<MatchDetails> {
-        const seasonKey = matchKey.split('-')[0];
+        const seasonKey = matchKey.split("-")[0];
         return this.arrToObj(
             getMatchDetailsType(seasonKey),
             await this.fetch(`/match/${matchKey}/details`)
