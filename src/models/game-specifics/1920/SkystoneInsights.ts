@@ -1,215 +1,221 @@
-import {Insights} from "../../index";
-import {ISerializable} from "../../ISerializable";
+import Insights from "../../Insights";
+import { ISerializable } from "../../ISerializable";
 import Match from "../../Match";
 
+export default class SkystoneInsights
+    extends Insights
+    implements ISerializable
+{
+    private _autoAverageSkystonesDelivered: number;
+    private _autoAverageStonesDelivered: number;
+    private _autoAveragePlaced: number;
+    private _autoPercentParked: number;
+    private _percentFoundationMoved: number;
+    private _percentFoundationRepositioned: number;
+    private _teleAveragePlaced: number;
+    private _teleAverageReturned: number;
+    private _teleAverageDelivered: number;
+    private _endAverageCapLevel: number;
+    private _endAverageTowerBonus: number;
+    private _endAverageCapBonus: number;
+    private _endAverageLevelBonus: number;
+    private _endPercentParked: number;
+    private _autoPercentNaved: number;
 
-export default class SkystoneInsights extends Insights implements ISerializable {
-  private _autoAverageSkystonesDelivered: number;
-  private _autoAverageStonesDelivered: number;
-  private _autoAveragePlaced: number;
-  private _autoPercentParked: number;
-  private _percentFoundationMoved: number;
-  private _percentFoundationRepositioned: number;
-  private _teleAveragePlaced: number;
-  private _teleAverageReturned: number;
-  private _teleAverageDelivered: number;
-  private _endAverageCapLevel: number;
-  private _endAverageTowerBonus: number;
-  private _endAverageCapBonus: number;
-  private _endAverageLevelBonus: number;
-  private _endPercentParked: number;
-  private _autoPercentNaved: number;
-
-  constructor() {
-    super();
-    this._autoAverageSkystonesDelivered = 0;
-    this._autoAverageStonesDelivered = 0;
-    this._autoAveragePlaced = 0;
-    this._autoPercentParked = 0;
-    this._percentFoundationMoved = 0;
-    this._percentFoundationRepositioned = 0;
-    this._teleAveragePlaced = 0;
-    this._teleAverageReturned = 0;
-    this._teleAverageDelivered = 0;
-    this._endAverageCapLevel = 0;
-    this._endAverageTowerBonus = 0;
-    this._endAverageCapBonus = 0;
-    this._endAverageLevelBonus = 0;
-    this._endPercentParked = 0;
-    this._autoPercentNaved = 0;
-  }
-
-  toJSON(): object {
-    return {
-      high_score_match: this.highScoreMatch,
-      average_match_score: this.averageMatchScore,
-      average_winning_score: this.averageWinningScore,
-      average_winning_margin: this.averageWinningMargin,
-      average_major_penalty: this.averageMajorPenalties,
-      average_minor_penalty: this.averageMinorPenalties,
-      game: {
-        auto_average_skystones_delivered: this.autoAverageSkystonesDelivered,
-        auto_average_stones_delivered: this.autoAverageStonesDelivered,
-        auto_average_placed: this.autoAveragePlaced,
-        auto_percent_parked: this.autoPercentParked,
-        percent_foundation_moved: this.percentFoundationMoved,
-        percent_foundation_repositioned: this.percentFoundationRepositioned,
-        tele_average_placed: this.teleAveragePlaced,
-        tele_average_returned: this.teleAverageReturned,
-        tele_average_delivered: this.teleAverageDelivered,
-        end_average_cap_level: this.endAverageCapLevel,
-        end_average_tower_bonus: this.endAverageTowerBonus,
-        end_average_cap_bonus: this.endAverageCapBonus,
-        end_average_level_bonus: this.endAverageLevelBonus,
-        end_percent_parked: this.endPercentParked,
-        auto_percent_naved: this.autoPercentNaved,
-      }
+    constructor() {
+        super();
+        this._autoAverageSkystonesDelivered = 0;
+        this._autoAverageStonesDelivered = 0;
+        this._autoAveragePlaced = 0;
+        this._autoPercentParked = 0;
+        this._percentFoundationMoved = 0;
+        this._percentFoundationRepositioned = 0;
+        this._teleAveragePlaced = 0;
+        this._teleAverageReturned = 0;
+        this._teleAverageDelivered = 0;
+        this._endAverageCapLevel = 0;
+        this._endAverageTowerBonus = 0;
+        this._endAverageCapBonus = 0;
+        this._endAverageLevelBonus = 0;
+        this._endPercentParked = 0;
+        this._autoPercentNaved = 0;
     }
-  }
 
-  fromJSON(json: any): SkystoneInsights {
-    const skystone: SkystoneInsights = new SkystoneInsights();
-    skystone.highScoreMatch = json.high_score_match ? new Match().fromJSON(json.high_score_match) : null;
-    skystone.averageMatchScore = json.average_match_score;
-    skystone.averageWinningScore = json.average_winning_score;
-    skystone.averageWinningMargin = json.average_winning_margin;
-    skystone.averageMajorPenalties = json.average_major_penalty;
-    skystone.averageMinorPenalties = json.average_minor_penalty;
+    toJSON(): object {
+        return {
+            high_score_match: this.highScoreMatch,
+            average_match_score: this.averageMatchScore,
+            average_winning_score: this.averageWinningScore,
+            average_winning_margin: this.averageWinningMargin,
+            game: {
+                auto_average_skystones_delivered:
+                    this.autoAverageSkystonesDelivered,
+                auto_average_stones_delivered: this.autoAverageStonesDelivered,
+                auto_average_placed: this.autoAveragePlaced,
+                auto_percent_parked: this.autoPercentParked,
+                percent_foundation_moved: this.percentFoundationMoved,
+                percent_foundation_repositioned:
+                    this.percentFoundationRepositioned,
+                tele_average_placed: this.teleAveragePlaced,
+                tele_average_returned: this.teleAverageReturned,
+                tele_average_delivered: this.teleAverageDelivered,
+                end_average_cap_level: this.endAverageCapLevel,
+                end_average_tower_bonus: this.endAverageTowerBonus,
+                end_average_cap_bonus: this.endAverageCapBonus,
+                end_average_level_bonus: this.endAverageLevelBonus,
+                end_percent_parked: this.endPercentParked,
+                auto_percent_naved: this.autoPercentNaved,
+            },
+        };
+    }
 
-    skystone.autoAverageStonesDelivered = json.game.auto_average_skystones_delivered;
-    skystone.autoAveragePlaced = json.game.auto_average_placed;
-    skystone.autoPercentParked = json.game.auto_percent_parked;
-    skystone.percentFoundationMoved = json.game.percent_foundation_moved;
-    skystone.percentFoundationRepositioned = json.game.percent_foundation_repositioned;
-    skystone.teleAveragePlaced = json.game.tele_average_placed;
-    skystone.teleAverageReturned = json.game.tele_average_returned;
-    skystone.teleAverageDelivered = json.game.tele_average_delivered;
-    skystone.endAverageCapLevel = json.game.end_average_cap_level;
-    skystone.endAverageTowerBonus = json.game.end_average_tower_bonus;
-    skystone.endAverageCapBonus = json.game.end_average_cap_bonus;
-    skystone.endAverageLevelBonus = json.game.end_average_level_bonus;
-    skystone.endPercentParked = json.game.end_percent_parked;
-    skystone.autoPercentNaved = json.game.auto_percent_naved;
-    return skystone;
-  }
+    fromJSON(json: any): SkystoneInsights {
+        const skystone: SkystoneInsights = new SkystoneInsights();
+        skystone.highScoreMatch = json.high_score_match
+            ? new Match().fromJSON(json.high_score_match)
+            : null;
+        skystone.averageMatchScore = json.average_match_score;
+        skystone.averageWinningScore = json.average_winning_score;
+        skystone.averageWinningMargin = json.average_winning_margin;
+        skystone.averageMajorPenalties = json.average_major_penalty;
+        skystone.averageMinorPenalties = json.average_minor_penalty;
 
-  get autoAverageSkystonesDelivered(): number {
-    return this._autoAverageSkystonesDelivered;
-  }
+        skystone.autoAverageStonesDelivered =
+            json.game.auto_average_skystones_delivered;
+        skystone.autoAveragePlaced = json.game.auto_average_placed;
+        skystone.autoPercentParked = json.game.auto_percent_parked;
+        skystone.percentFoundationMoved = json.game.percent_foundation_moved;
+        skystone.percentFoundationRepositioned =
+            json.game.percent_foundation_repositioned;
+        skystone.teleAveragePlaced = json.game.tele_average_placed;
+        skystone.teleAverageReturned = json.game.tele_average_returned;
+        skystone.teleAverageDelivered = json.game.tele_average_delivered;
+        skystone.endAverageCapLevel = json.game.end_average_cap_level;
+        skystone.endAverageTowerBonus = json.game.end_average_tower_bonus;
+        skystone.endAverageCapBonus = json.game.end_average_cap_bonus;
+        skystone.endAverageLevelBonus = json.game.end_average_level_bonus;
+        skystone.endPercentParked = json.game.end_percent_parked;
+        skystone.autoPercentNaved = json.game.auto_percent_naved;
+        return skystone;
+    }
 
-  set autoAverageSkystonesDelivered(value: number) {
-    this._autoAverageSkystonesDelivered = value;
-  }
+    get autoAverageSkystonesDelivered(): number {
+        return this._autoAverageSkystonesDelivered;
+    }
 
-  get autoAverageStonesDelivered(): number {
-    return this._autoAverageStonesDelivered;
-  }
+    set autoAverageSkystonesDelivered(value: number) {
+        this._autoAverageSkystonesDelivered = value;
+    }
 
-  set autoAverageStonesDelivered(value: number) {
-    this._autoAverageStonesDelivered = value;
-  }
+    get autoAverageStonesDelivered(): number {
+        return this._autoAverageStonesDelivered;
+    }
 
-  get autoAveragePlaced(): number {
-    return this._autoAveragePlaced;
-  }
+    set autoAverageStonesDelivered(value: number) {
+        this._autoAverageStonesDelivered = value;
+    }
 
-  set autoAveragePlaced(value: number) {
-    this._autoAveragePlaced = value;
-  }
+    get autoAveragePlaced(): number {
+        return this._autoAveragePlaced;
+    }
 
-  get autoPercentParked(): number {
-    return this._autoPercentParked;
-  }
+    set autoAveragePlaced(value: number) {
+        this._autoAveragePlaced = value;
+    }
 
-  set autoPercentParked(value: number) {
-    this._autoPercentParked = value;
-  }
+    get autoPercentParked(): number {
+        return this._autoPercentParked;
+    }
 
-  get percentFoundationMoved(): number {
-    return this._percentFoundationMoved;
-  }
+    set autoPercentParked(value: number) {
+        this._autoPercentParked = value;
+    }
 
-  set percentFoundationMoved(value: number) {
-    this._percentFoundationMoved = value;
-  }
+    get percentFoundationMoved(): number {
+        return this._percentFoundationMoved;
+    }
 
-  get percentFoundationRepositioned(): number {
-    return this._percentFoundationRepositioned;
-  }
+    set percentFoundationMoved(value: number) {
+        this._percentFoundationMoved = value;
+    }
 
-  set percentFoundationRepositioned(value: number) {
-    this._percentFoundationRepositioned = value;
-  }
+    get percentFoundationRepositioned(): number {
+        return this._percentFoundationRepositioned;
+    }
 
-  get teleAveragePlaced(): number {
-    return this._teleAveragePlaced;
-  }
+    set percentFoundationRepositioned(value: number) {
+        this._percentFoundationRepositioned = value;
+    }
 
-  set teleAveragePlaced(value: number) {
-    this._teleAveragePlaced = value;
-  }
+    get teleAveragePlaced(): number {
+        return this._teleAveragePlaced;
+    }
 
-  get teleAverageReturned(): number {
-    return this._teleAverageReturned;
-  }
+    set teleAveragePlaced(value: number) {
+        this._teleAveragePlaced = value;
+    }
 
-  set teleAverageReturned(value: number) {
-    this._teleAverageReturned = value;
-  }
+    get teleAverageReturned(): number {
+        return this._teleAverageReturned;
+    }
 
-  get teleAverageDelivered(): number {
-    return this._teleAverageDelivered;
-  }
+    set teleAverageReturned(value: number) {
+        this._teleAverageReturned = value;
+    }
 
-  set teleAverageDelivered(value: number) {
-    this._teleAverageDelivered = value;
-  }
+    get teleAverageDelivered(): number {
+        return this._teleAverageDelivered;
+    }
 
-  get endAverageCapLevel(): number {
-    return this._endAverageCapLevel;
-  }
+    set teleAverageDelivered(value: number) {
+        this._teleAverageDelivered = value;
+    }
 
-  set endAverageCapLevel(value: number) {
-    this._endAverageCapLevel = value;
-  }
+    get endAverageCapLevel(): number {
+        return this._endAverageCapLevel;
+    }
 
-  get endAverageTowerBonus(): number {
-    return this._endAverageTowerBonus;
-  }
+    set endAverageCapLevel(value: number) {
+        this._endAverageCapLevel = value;
+    }
 
-  set endAverageTowerBonus(value: number) {
-    this._endAverageTowerBonus = value;
-  }
+    get endAverageTowerBonus(): number {
+        return this._endAverageTowerBonus;
+    }
 
-  get endAverageCapBonus(): number {
-    return this._endAverageCapBonus;
-  }
+    set endAverageTowerBonus(value: number) {
+        this._endAverageTowerBonus = value;
+    }
 
-  set endAverageCapBonus(value: number) {
-    this._endAverageCapBonus = value;
-  }
+    get endAverageCapBonus(): number {
+        return this._endAverageCapBonus;
+    }
 
-  get endAverageLevelBonus(): number {
-    return this._endAverageLevelBonus;
-  }
+    set endAverageCapBonus(value: number) {
+        this._endAverageCapBonus = value;
+    }
 
-  set endAverageLevelBonus(value: number) {
-    this._endAverageLevelBonus = value;
-  }
+    get endAverageLevelBonus(): number {
+        return this._endAverageLevelBonus;
+    }
 
-  get endPercentParked(): number {
-    return this._endPercentParked;
-  }
+    set endAverageLevelBonus(value: number) {
+        this._endAverageLevelBonus = value;
+    }
 
-  set endPercentParked(value: number) {
-    this._endPercentParked = value;
-  }
+    get endPercentParked(): number {
+        return this._endPercentParked;
+    }
 
-  get autoPercentNaved(): number {
-    return this._autoPercentNaved;
-  }
+    set endPercentParked(value: number) {
+        this._endPercentParked = value;
+    }
 
-  set autoPercentNaved(value: number) {
-    this._autoPercentNaved = value;
-  }
+    get autoPercentNaved(): number {
+        return this._autoPercentNaved;
+    }
+
+    set autoPercentNaved(value: number) {
+        this._autoPercentNaved = value;
+    }
 }
