@@ -32,6 +32,8 @@ export default class RoverRuckusInsights extends Insights implements ISerializab
       average_match_score: this.averageMatchScore,
       average_winning_score: this.averageWinningScore,
       average_winning_margin: this.averageWinningMargin,
+      average_major_penalty: this.averageMajorPenalties,
+      average_minor_penalty: this.averageMinorPenalties,
       game: {
         auto_percent_landing: this.autoPercentLanding,
         auto_percent_sampling: this.autoPercentSampling,
@@ -52,6 +54,8 @@ export default class RoverRuckusInsights extends Insights implements ISerializab
     insights.averageMatchScore = json.average_match_score;
     insights.averageWinningScore = json.average_winning_score;
     insights.averageWinningMargin = json.average_winning_margin;
+    insights.averageMajorPenalties = json.average_major_penalty;
+    insights.averageMinorPenalties = json.average_minor_penalty;
     insights.autoPercentLanding = json.game.auto_percent_landing;
     insights.autoPercentSampling = json.game.auto_percent_sampling;
     insights.autoPercentClaiming = json.game.auto_percent_claiming;

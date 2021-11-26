@@ -54,6 +54,8 @@ export default class FreightFrenzyInsights extends Insights implements ISerializ
       average_match_score: this.averageMatchScore,
       average_winning_score: this.averageWinningScore,
       average_winning_margin: this.averageWinningMargin,
+      average_major_penalty: this.averageMajorPenalties,
+      average_minor_penalty: this.averageMinorPenalties,
       game: {
         auto_percent_partially_in_storage: this.autoAveragePartialStorage,
         auto_percent_complete_in_storage: this.autoAverageCompleteStorage,

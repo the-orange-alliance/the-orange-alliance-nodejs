@@ -30,6 +30,8 @@ export default class RelicRecoveryInsights extends Insights implements ISerializ
       average_match_score: this.averageMatchScore,
       average_winning_score: this.averageWinningScore,
       average_winning_margin: this.averageWinningMargin,
+      average_major_penalty: this.averageMajorPenalties,
+      average_minor_penalty: this.averageMinorPenalties,
       game: {
         auto_average_glyphs: this.autoAverageGlyphs,
         tele_average_glyphs: this.teleAverageGlyphs,
@@ -49,6 +51,8 @@ export default class RelicRecoveryInsights extends Insights implements ISerializ
     insights.averageMatchScore = json.average_match_score;
     insights.averageWinningScore = json.average_winning_score;
     insights.averageWinningMargin = json.average_winning_margin;
+    insights.averageMajorPenalties = json.average_major_penalty;
+    insights.averageMinorPenalties = json.average_minor_penalty;
     insights.autoAverageGlyphs = json.game.auto_average_glyphs;
     insights.teleAverageGlyphs = json.game.tele_average_glyphs;
     insights.teleAverageCiphers = json.game.tele_average_ciphers;

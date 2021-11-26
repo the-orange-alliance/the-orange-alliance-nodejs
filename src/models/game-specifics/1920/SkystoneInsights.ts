@@ -45,6 +45,8 @@ export default class SkystoneInsights extends Insights implements ISerializable 
       average_match_score: this.averageMatchScore,
       average_winning_score: this.averageWinningScore,
       average_winning_margin: this.averageWinningMargin,
+      average_major_penalty: this.averageMajorPenalties,
+      average_minor_penalty: this.averageMinorPenalties,
       game: {
         auto_average_skystones_delivered: this.autoAverageSkystonesDelivered,
         auto_average_stones_delivered: this.autoAverageStonesDelivered,
