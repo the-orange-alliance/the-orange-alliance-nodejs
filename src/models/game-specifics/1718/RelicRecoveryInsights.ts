@@ -1,6 +1,6 @@
-import { ISerializable } from '../ISerializable';
-import Insights from '../Insights';
-import Match from '../Match';
+import { ISerializable } from '../../ISerializable';
+import Insights from '../../Insights';
+import Match from '../../Match';
 
 export default class RelicRecoveryInsights extends Insights implements ISerializable {
   private _autoAverageGlyphs: number;

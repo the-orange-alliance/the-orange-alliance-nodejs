@@ -1,4 +1,4 @@
-import { ISerializable } from "../ISerializable";
+import { ISerializable } from "../../ISerializable";
 
 export enum Stone {
   UNKNOWN = -1,

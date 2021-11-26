@@ -1,11 +1,7 @@
 import { ISerializable } from "./ISerializable";
 import {
   MediaTypeTeam,
-  MediaTypeEvent,
-  numberToTeamMedia,
-  numberToEventMedia,
-  teamMediaToNumber,
-  eventMediaToNumber
+  MediaTypeEvent
 } from "./types/MediaType";
 
 export default class Media implements ISerializable {
@@ -28,19 +24,11 @@ export default class Media implements ISerializable {
   }
 
   toJSON(): object {
-    let m_type: MediaTypeTeam | MediaTypeEvent = MediaTypeTeam.Unknown;
-    if (this.teamKey !== "" || this.teamKey !== undefined) {
-      m_type = teamMediaToNumber(this.mediaType as MediaTypeTeam);
-    } else if (this.eventKey !== "" || this.eventKey !== undefined) {
-      m_type = eventMediaToNumber(this.mediaType as MediaTypeEvent);
-    } else {
-      m_type = -1;
-    }
     return {
       media_key: this.mediaKey,
       event_key: this.eventKey,
       team_key: this.teamKey,
-      media_type: m_type,
+      media_type: this.mediaType.valueOf(),
       is_primary: this.isPrimary,
       title: this.mediaTitle,
       link: this.mediaLink
@@ -48,21 +36,17 @@ export default class Media implements ISerializable {
   }
 
   fromJSON(json: any): Media {
-    const award: Media = new Media();
-    if (this.teamKey !== "") {
-      award.mediaType = numberToTeamMedia(json.media_type);
-    } else if (this.teamKey !== "") {
-      award.mediaType = numberToEventMedia(json.media_type);
-    } else {
-      award.mediaType = MediaTypeTeam.Unknown;
-    }
-    award.mediaKey = json.media_key;
-    award.eventKey = json.event_key;
-    award.teamKey = json.team_key;
-    award.isPrimary = json.is_primary;
-    award.mediaTitle = json.title;
-    award.mediaLink = json.link;
-    return award;
+    const media: Media = new Media();
+    media.mediaKey = json.media_key;
+    media.eventKey = json.event_key;
+    media.teamKey = json.team_key;
+    media.isPrimary = json.is_primary;
+    media.mediaTitle = json.title;
+    media.mediaLink = json.link;
+    if(media.teamKey && media.teamKey !== '') media.mediaType = json.media_type as MediaTypeTeam;
+    else if(media.eventKey && media.eventKey !== '') media.mediaType = json.media_type as MediaTypeEvent;
+    else media.mediaType = json.media_type;
+    return media;
   }
 
   get mediaKey(): string {

@@ -1,5 +1,5 @@
-import { ISerializable } from '../ISerializable';
-import MatchDetails from '../MatchDetails';
+import { ISerializable } from '../../ISerializable';
+import MatchDetails from '../../MatchDetails';
 import SkystoneAllianceDetails from './SkystoneAllianceDetails';
 
 export default class SkystoneMatchDetails extends MatchDetails implements ISerializable {

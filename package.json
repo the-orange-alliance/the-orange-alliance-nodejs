@@ -1,6 +1,6 @@
 {
     "name": "@the-orange-alliance/api",
-    "version": "0.1.0",
+    "version": "0.1.8-crossfetch",
     "description": "The Orange Alliance Library for Node.js",
     "author": "The Orange Alliance, Josh Bacon",
     "license": "MIT",
@@ -25,12 +25,9 @@
     "dependencies": {
         "@types/luxon": "^1.22.0",
         "@types/node": "^12.20.36",
-        "@types/node-fetch": "^2.5.4",
         "@types/qs": "^6.9.0",
         "cross-fetch": "^3.1.4",
-        "isomorphic-unfetch": "^3.1.0",
         "luxon": "^1.23.0",
-        "node-fetch": "^3.0.0",
         "qs": "^6.9.1"
     },
     "devDependencies": {

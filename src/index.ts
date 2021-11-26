@@ -23,6 +23,8 @@ import {
     LeagueDiv,
 } from "./models";
 import { ISerializable } from "./models/ISerializable";
+import {getMatchDetailsType} from "./models/game-specifics/GameData";
+import {getInsights, getInsightsType} from "./models/game-specifics/InsightsData";
 
 const api_endpoint = "https://theorangealliance.org/api";
 
@@ -195,6 +197,12 @@ export class API {
      * @param region_key The key of the region to query the database by
      * @param season_key The key of the season to query the database by
      * @param type The event type to query the database by
+     * @param start_date Start date of events to search
+     * @param start_date_query 'equals' => events where start_date equals start_date; 'before' => events where start_date is before given date; 'after' => events where start_date is after given date
+     * @param end_date End date of events to search
+     * @param between To be used to search events between start_date and end_date, not to be used in conjunction with start_date_query
+     * @param includeMatchCount To include match count in the response
+     * @param includeTeamCount To include team count in the response
      * @returns Array of events matching the query
      */
     async getEvents({
@@ -204,6 +212,7 @@ export class API {
         type,
         start_date,
         end_date,
+        start_date_query,
         between,
         includeMatchCount,
         includeTeamCount,
@@ -214,6 +223,7 @@ export class API {
         type?: string;
         start_date?: string;
         end_date?: string;
+        start_date_query?: 'equals' | 'before' | 'after';
         between?: boolean;
         includeMatchCount?: boolean;
         includeTeamCount?: boolean;
@@ -226,6 +236,7 @@ export class API {
                 season_key: season_key,
                 type: type,
                 start_date: start_date,
+                start_date_query: start_date_query,
                 end_date: end_date,
                 between: between,
                 includeMatchCount: includeMatchCount,
@@ -313,10 +324,33 @@ export class API {
         eventKey: string,
         type?: "quals" | "elims"
     ): Promise<Insights[]> {
+        const seasonKey = eventKey.split('-')[0];
         return this.arrToObj(
-            Insights,
+            getInsightsType(seasonKey),
             await this.fetch(`/event/${eventKey}/insights`, { type })
         );
+    }
+    /**
+     * Returns all insights for that season.
+     * @param seasonKey the TOA season key to specify a season
+     * @param options Optional query parameters to narrow search
+     * @returns Object of Insights, where the key is the "Week Key" and the data is the averages for that "week"
+     */
+    async getSeasonInsights(
+      seasonKey: string,
+        options?: {
+          region_key?: string,
+            type?: 'elims' | 'quals',
+            single_team?: 'included' | 'excluded' | 'only'
+        }
+    ): Promise<{ [key: string]: Insights }> {
+        const data = await this.fetch(`/insights/${seasonKey}`, options);
+        const returnData = {} as { [key: string]: Insights };
+        const type = getInsightsType(seasonKey);
+        for(const [key, value] of Object.entries(JSON.parse(data))) {
+            returnData[key] = new type().fromJSON(value);
+        }
+        return returnData;
     }
     /**
      * Returns all alliances for that event.
@@ -434,8 +468,9 @@ export class API {
      * @returns Specified match details
      */
     async getMatchDetails(matchKey: string): Promise<MatchDetails> {
+        const seasonKey = matchKey.split('-')[0];
         return this.arrToObj(
-            MatchDetails,
+            getMatchDetailsType(seasonKey),
             await this.fetch(`/match/${matchKey}/details`)
         )[0];
     }
