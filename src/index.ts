@@ -339,9 +339,9 @@ export class API {
     async getSeasonInsights(
       seasonKey: string,
         options?: {
-          region_key: string,
-            type: 'elims' | 'quals',
-            single_team: 'included' | 'excluded' | 'only'
+          region_key?: string,
+            type?: 'elims' | 'quals',
+            single_team?: 'included' | 'excluded' | 'only'
         }
     ): Promise<{ [key: string]: Insights }> {
         const data = await this.fetch(`/insights/${seasonKey}`, options);
