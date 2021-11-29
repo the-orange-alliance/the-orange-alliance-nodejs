@@ -31,7 +31,6 @@ export function getInsightsType(seasonKey: string): GameSpecificInsights {
         case "2021":
             return new UltimateGoalInsights();
         case "2122":
-            console.log("FreightFrenzy");
             return new FreightFrenzyInsights();
         default:
             return new Insights();
