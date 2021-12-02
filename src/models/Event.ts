@@ -213,8 +213,7 @@ export default class Event implements ISerializable {
             : [];
         event.insights = json.insights
             ? json.insights.map((val: any) => {
-                  console.log(val);
-                  return getInsightsType(event.seasonKey).fromJSON(val);
+                   return val? getInsightsType(event.seasonKey).fromJSON(val) : null;
               })
             : [];
         return event;

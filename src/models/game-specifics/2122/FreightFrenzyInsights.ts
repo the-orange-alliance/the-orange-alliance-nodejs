@@ -50,7 +50,7 @@ export default class FreightFrenzyInsights extends Insights implements ISerializ
 
   toJSON(): object {
     return {
-      high_score_match: this.highScoreMatch,
+      high_score_match: this.highScoreMatch?.toJSON(),
       average_match_score: this.averageMatchScore,
       average_winning_score: this.averageWinningScore,
       average_winning_margin: this.averageWinningMargin,
