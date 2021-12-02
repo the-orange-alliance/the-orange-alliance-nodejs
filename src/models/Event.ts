@@ -154,7 +154,7 @@ export default class Event implements ISerializable {
                     !insightsIsArr || (insightsIsArr && this.matches.length === 0)
                     ? undefined
                     : this.insights.map((val: GameSpecificInsights) =>
-                          val.toJSON()
+                          val ? val.toJSON() : null
                       ),
         };
     }
