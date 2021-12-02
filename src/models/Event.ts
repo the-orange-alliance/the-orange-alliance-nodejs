@@ -96,6 +96,12 @@ export default class Event implements ISerializable {
     }
 
     toJSON(): object {
+        const matchesIsArr = Array.isArray(this.matches);
+        const rankingsIsArr = Array.isArray(this.rankings);
+        const awardsIsArr = Array.isArray(this.awards);
+        const teamsIsArr = Array.isArray(this.teams);
+        const alliancesIsArr = Array.isArray(this.alliances);
+        const insightsIsArr = Array.isArray(this.insights);
         return {
             event_key: this.eventKey,
             season_key: this.seasonKey,
@@ -125,27 +131,27 @@ export default class Event implements ISerializable {
             advance_event: this.advanceEvent,
             data_source: dataSourceToNumber(this.dataSource),
             matches:
-                Array.isArray(this.matches) && this.matches.length === 0
+                    !matchesIsArr || (matchesIsArr && this.matches.length === 0)
                     ? undefined
                     : this.matches.map((val: Match) => val.toJSON()),
             rankings:
-                Array.isArray(this.rankings) && this.rankings.length === 0
+                    !rankingsIsArr || (rankingsIsArr && this.matches.length === 0)
                     ? undefined
                     : this.rankings.map((val: Ranking) => val.toJSON()),
             awards:
-                Array.isArray(this.awards) && this.awards.length === 0
+                    !awardsIsArr || (awardsIsArr && this.matches.length === 0)
                     ? undefined
                     : this.awards.map((val: AwardRecipient) => val.toJSON()),
             teams:
-                Array.isArray(this.teams) && this.teams.length === 0
+                    !teamsIsArr || (teamsIsArr && this.matches.length === 0)
                     ? undefined
                     : this.teams.map((val: EventParticipant) => val.toJSON()),
             alliances:
-                Array.isArray(this.alliances) && this.alliances.length === 0
+                    !alliancesIsArr || (alliancesIsArr && this.matches.length === 0)
                     ? undefined
                     : this.alliances.map((val: Alliance) => val.toJSON()),
             insights:
-                Array.isArray(this.insights) && this.insights.length === 0
+                    !insightsIsArr || (insightsIsArr && this.matches.length === 0)
                     ? undefined
                     : this.insights.map((val: GameSpecificInsights) =>
                           val.toJSON()
