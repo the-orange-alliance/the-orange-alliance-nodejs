@@ -13,15 +13,15 @@ export default class SearchResult implements ISerializable {
 
   toJSON(): object {
     return {
-      teams: this.teams,
-      events: this.events
+      teams: this.teams.map(t => t.toJSON()),
+      events: this.events.map(e => e.toJSON())
     };
   }
 
   fromJSON(json: any): SearchResult {
     const season: SearchResult = new SearchResult();
-    season.teams = json.teams;
-    season.events = json.events;
+    season.teams = json.teams.map((t: any) => new Team().fromJSON(t));
+    season.events = json.events.map((e: any) => new Event().fromJSON(e));
     return season;
   }
 

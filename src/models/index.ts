@@ -15,6 +15,7 @@ export { default as ModifiedEvent } from "./ModifiedEvent";
 export { default as ModifiedTeam } from "./ModifiedTeam";
 export { default as Ranking } from "./Ranking";
 export { default as Region } from "./Region";
+export { default as SearchResult } from "./SearchResult";
 export { default as Season } from "./Season";
 export { default as Team } from "./Team";
 export { default as TeamSeasonRecord } from "./TeamSeasonRecord";

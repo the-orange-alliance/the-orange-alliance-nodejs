@@ -1,6 +1,6 @@
 {
     "name": "@the-orange-alliance/api",
-    "version": "0.1.11-c-crossfetch",
+    "version": "0.1.14-crossfetch",
     "description": "The Orange Alliance Library for Node.js",
     "author": "The Orange Alliance, Josh Bacon",
     "license": "MIT",
