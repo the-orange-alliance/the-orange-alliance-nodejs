@@ -29,6 +29,7 @@ import {
     getInsights,
     getInsightsType,
 } from "./models/game-specifics/InsightsData";
+import SearchResult from "./models/SearchResult";
 
 const api_endpoint = "https://theorangealliance.org/api";
 
@@ -690,5 +691,15 @@ export class API {
      */
     async getLeagueDivisions(): Promise<LeagueDiv[]> {
         return this.arrToObj(LeagueDiv, await this.fetch(`/league/divisions`));
+    }
+
+    // /api/search
+    /**
+     * Search teams, events, and eventually leagues
+     * @param query query to search upon
+     * @returns search results
+     */
+    async search(query: string): Promise<SearchResult> {
+        return this.jsonToObj(SearchResult, await this.fetch(`/search?q=${query}`))
     }
 }
