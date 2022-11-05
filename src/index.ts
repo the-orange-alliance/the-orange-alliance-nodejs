@@ -31,7 +31,7 @@ import {
 } from "./models/game-specifics/InsightsData";
 import SearchResult from "./models/SearchResult";
 
-const api_endpoint = "https://theorangealliance.org/api";
+let api_endpoint = "https://theorangealliance.org/api";
 
 export class API {
     private _api_key: string;
@@ -46,6 +46,14 @@ export class API {
     constructor(api_key: string, application_name: string) {
         this._api_key = api_key;
         this._app_name = application_name;
+    }
+
+    /**
+     * Set a custom URL (useful for testing API locally)
+     * @param url
+     */
+    public setCustomUrl(url: string) {
+        api_endpoint = url;
     }
 
     headers(): HTTPHeaders {
@@ -450,13 +458,13 @@ export class API {
     /**
      * Returns the matches with the highest scores based on the query.
      * @param type quals, elims, or all matches
+     * @param options
      * @returns Match with the high score
      */
     async getHighScoreMatch(
         type: "quals" | "elims" | "all" | "single_team",
         options: {
-            seasonKey?: string;
-            singleTeam?: boolean;
+            season_key?: string;
             penalty?: boolean;
         } = {}
     ): Promise<Match> {
