@@ -29,6 +29,7 @@ export default class PowerPlayAllianceDetails implements ISerializable {
   private _endNavPoints: number;
 
   private _ownedJunctions: number;
+  private _beacons: number;
   private _ownershipPoints: number;
   private _circuitExists: boolean
   private _circuitPoints: number;
@@ -66,6 +67,7 @@ export default class PowerPlayAllianceDetails implements ISerializable {
     this._endNavigated2 = false;
     this._endNavPoints = -1;
     this._ownedJunctions = -1;
+    this._beacons = -1;
     this._ownershipPoints = -1;
     this._circuitExists = false
     this._circuitPoints = -1;
@@ -103,6 +105,7 @@ export default class PowerPlayAllianceDetails implements ISerializable {
       end_navigated_2: this.endNavigated2,
       end_nav_points: this.endNavPoints,
       owned_junctions: this.ownedJunctions,
+      beacons: this.beacons,
       ownership_points: this.ownershipPoints,
       circuit_exists: this.circuitExists,
       circuit_points: this.circuitPoints,
@@ -140,6 +143,7 @@ export default class PowerPlayAllianceDetails implements ISerializable {
     this.endNavigated2 = json.end_navigated_2;
     this.endNavPoints = json.end_nav_points;
     this.ownedJunctions = json.owned_junctions;
+    this.beacons = json.beacons;
     this.ownershipPoints = json.ownership_points;
     this.circuitExists = json.circuit_exists;
     this.circuitPoints = json.circuit_points;
@@ -328,6 +332,14 @@ export default class PowerPlayAllianceDetails implements ISerializable {
 
   set ownedJunctions(value: number) {
     this._ownedJunctions = value;
+  }
+
+  get beacons(): number {
+    return this._beacons;
+  }
+
+  set beacons(value: number) {
+    this._beacons = value;
   }
 
   get ownershipPoints(): number {
