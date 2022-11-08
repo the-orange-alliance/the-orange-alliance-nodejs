@@ -213,8 +213,8 @@ export class API {
      * @param start_date Start date of events to search
      * @param start_date_query 'equals' => events where start_date equals start_date; 'before' => events where start_date is before given date; 'after' => events where start_date is after given date
      * @param end_date End date of events to search
-     * @param between To be used to search events between start_date and end_date, not to be used in conjunction with start_date_query
-     * @param today To be used to get events happening today. Overrides all other date parameters
+     * @param between To be used to search events between start_date and end_date, overrides start_date_query
+     * @param on To be used to get events that happened on the given date. Overrides all other date parameters
      * @param includeMatchCount To include match count in the response
      * @param includeTeamCount To include team count in the response
      * @returns Array of events matching the query
@@ -228,7 +228,7 @@ export class API {
         end_date,
         start_date_query,
         between,
-        today,
+        on,
         includeMatchCount,
         includeTeamCount,
     }: {
@@ -240,7 +240,7 @@ export class API {
         end_date?: string;
         start_date_query?: "equals" | "before" | "after";
         between?: boolean;
-        today?: boolean;
+        on?: string;
         includeMatchCount?: boolean;
         includeTeamCount?: boolean;
     } = {}): Promise<Event[]> {
@@ -255,7 +255,7 @@ export class API {
                 start_date_query: start_date_query,
                 end_date: end_date,
                 between: between,
-                today: today,
+                on: on,
                 includeMatchCount: includeMatchCount,
                 includeTeamCount: includeTeamCount,
             })
