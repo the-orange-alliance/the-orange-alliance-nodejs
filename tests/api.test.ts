@@ -2,18 +2,19 @@ import { API } from "../src";
 import { mockFetch } from "./util/fetch_mock";
 let api: API;
 
-jest.mock("node-fetch");
+jest.mock("cross-fetch");
+
 beforeAll(() => {
-  let api_key = process.env.TOA_KEY || "";
-  api = new API(api_key, "TOA-API-Test");
+    let api_key = process.env.TOA_KEY || "";
+    api = new API(api_key, "TOA-API-Test");
 });
 
 test("api_connection", async () => {
-  mockFetch({ version: "1.0.0" });
-  try {
-    let version = await api.getAPI();
-    expect(version.split(".").length).toEqual(3);
-  } catch (err) {
-    fail(err);
-  }
+    mockFetch({ version: "1.0.0" });
+    try {
+        let version = await api.getAPI();
+        expect(version.split(".").length).toEqual(3);
+    } catch (err) {
+        fail(err);
+    }
 });

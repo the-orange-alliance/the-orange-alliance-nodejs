@@ -1,20 +1,43 @@
-import MatchDetails from '../MatchDetails';
-import RelicRecoveryMatchDetails from './RelicRecoveryMatchDetails';
-import VelocityVortexMatchDetails from './VelocityVortexMatchDetails';
-import RoverRuckusMatchDetails from './RoverRuckusMatchDetails';
-import SkystoneMatchDetails from './SkystoneMatchDetails';
+import MatchDetails from "../MatchDetails";
+import UltimateGoalMatchDetails from "./2021/UltimateGoalMatchDetails";
+import FreightFrenzyMatchDetails from "./2122/FreightFrenzyMatchDetails";
+import VelocityVortexMatchDetails from "./1617/VelocityVortexMatchDetails";
+import RelicRecoveryMatchDetails from "./1718/RelicRecoveryMatchDetails";
+import RoverRuckusMatchDetails from "./1819/RoverRuckusMatchDetails";
+import SkystoneMatchDetails from "./1920/SkystoneMatchDetails";
+import PowerPlayMatchDetails from "./2223/PowerPlayMatchDetails";
+
+export type GameSpecificDetails =
+    | UltimateGoalMatchDetails
+    | FreightFrenzyMatchDetails
+    | VelocityVortexMatchDetails
+    | RelicRecoveryMatchDetails
+    | RoverRuckusMatchDetails
+    | SkystoneMatchDetails
+    | PowerPlayMatchDetails;
 
 export function getMatchDetails(seasonKey: string): MatchDetails {
-  switch (seasonKey) {
-    case '1617':
-      return new VelocityVortexMatchDetails();
-    case '1718':
-      return new RelicRecoveryMatchDetails();
-    case '1819':
-      return new RoverRuckusMatchDetails();
-    case '1920':
-      return new SkystoneMatchDetails();
-    default:
-      return new MatchDetails();
-  }
+    const matchDtlType = getMatchDetailsType(seasonKey);
+    return new matchDtlType();
+}
+
+export function getMatchDetailsType(seasonKey: string): typeof MatchDetails {
+    switch (seasonKey) {
+        case "1617":
+            return VelocityVortexMatchDetails;
+        case "1718":
+            return RelicRecoveryMatchDetails;
+        case "1819":
+            return RoverRuckusMatchDetails;
+        case "1920":
+            return SkystoneMatchDetails;
+        case "2021":
+            return UltimateGoalMatchDetails;
+        case "2122":
+            return FreightFrenzyMatchDetails;
+        case "2223":
+            return PowerPlayMatchDetails;
+        default:
+            return MatchDetails;
+    }
 }

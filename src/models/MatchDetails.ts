@@ -1,4 +1,5 @@
 import { ISerializable } from './ISerializable';
+import {getMatchDetails} from "./game-specifics/GameData";
 
 export default class MatchDetails implements ISerializable {
   private _matchDetailKey: string;
