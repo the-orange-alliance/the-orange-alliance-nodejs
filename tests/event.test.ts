@@ -1,7 +1,9 @@
 import { API } from "../src";
 import { mockFetch } from "./util/fetch_mock";
-jest.mock("isomorphic-unfetch");
+
 let api: API;
+
+jest.mock("cross-fetch");
 
 beforeAll(() => {
     let api_key = process.env.TOA_KEY || "";

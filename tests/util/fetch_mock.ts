@@ -1,7 +1,7 @@
 import { mocked } from "ts-jest/dist/util/testing";
-import fetch from "isomorphic-unfetch";
+import fetch from "cross-fetch";
 
-const { Response } = jest.requireActual("isomorphic-unfetch");
+const { Response } = jest.requireActual("cross-fetch");
 
 /**
  * Implement a mocked fetch response. Just use fetchMock(dataToReturn)
