@@ -140,7 +140,7 @@ test("from_json", () => {
   expect(a.captain).toEqual(captain);
   expect(a.pick1).toEqual(pick1);
   expect(a.pick2).toEqual(pick2);
-  delete json.pick2;
+  delete (json as any).pick2;
   a = new Alliance().fromJSON(json);
   expect(a.seed).toEqual(1);
   expect(a.captain).toEqual(captain);

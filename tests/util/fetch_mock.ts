@@ -1,4 +1,3 @@
-import { mocked } from "ts-jest/dist/util/testing";
 import fetch from "cross-fetch";
 
 const { Response } = jest.requireActual("cross-fetch");
@@ -9,7 +8,7 @@ const { Response } = jest.requireActual("cross-fetch");
  * @param status status code to return or nothing for 200
  */
 export const mockFetch = (data: any, status?: number) => {
-    mocked(fetch).mockImplementation(
+    jest.mocked(fetch).mockImplementation(
         () =>
             new Promise((resolve, reject) =>
                 resolve(
