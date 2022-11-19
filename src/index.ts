@@ -29,7 +29,7 @@ import {
     getInsights,
     getInsightsType,
 } from "./models/game-specifics/InsightsData";
-import SearchResult from "./models/SearchResult";
+import SearchResult, { EventSearchResult, TeamSearchResult } from "./models/SearchResult";
 
 let api_endpoint = "https://theorangealliance.org/api";
 
@@ -93,13 +93,13 @@ export class API {
     /**
      * Serializes a string json object into a javascript object with the specified type.
      * @param c Type of data to convert to
-     * @param response_data Data as a string json object
+     * @param responseData Data as a string json object
      */
     private jsonToObj<T extends ISerializable>(
         c: new () => T,
-        response_data: string
+        responseData: string
     ): T {
-        let res: any = JSON.parse(response_data);
+        let res: any = JSON.parse(responseData);
         let x = new c().fromJSON(res) as T;
         return x;
     }
@@ -107,13 +107,13 @@ export class API {
     /**
      * Serializes a string json array into an array of javascript objects with the specified type.
      * @param c Type of data to convert to
-     * @param response_data Data as a string json object
+     * @param responseData Data as a string json object
      */
     private arrToObj<T extends ISerializable>(
         c: new () => T,
-        response_data: string
+        responseData: string
     ): T[] {
-        let res: [any] = JSON.parse(response_data);
+        let res: [any] = JSON.parse(responseData);
         let x = res.map((value) => new c().fromJSON(value) as T);
         return x;
     }
@@ -711,7 +711,16 @@ export class API {
      * @param query query to search upon
      * @returns search results
      */
-    async search(query: string): Promise<SearchResult> {
-        return this.jsonToObj(SearchResult, await this.fetch(`/search?q=${query}`))
+    async search(query: string): Promise<SearchResult[]> {
+        const responseData = await this.fetch(`/search?q=${query}`)
+        const res: SearchResult[] = JSON.parse(responseData);
+
+        return res.map((value) => {
+            if (value.type === "team") {
+                return new TeamSearchResult().fromJSON(value)
+            } else {
+                return new EventSearchResult().fromJSON(value)
+            }
+        });
     }
 }

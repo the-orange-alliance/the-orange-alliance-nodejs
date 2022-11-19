@@ -1,43 +1,76 @@
-import { ISerializable } from './ISerializable';
 import Event from "./Event";
 import Team from "./Team";
 
-export default class SearchResult implements ISerializable {
-  private _events: Event[];
-  private _teams: Team[];
+export class TeamSearchResult extends Team {
+    private _score: number;
 
-  constructor() {
-    this._events = [];
-    this._teams = [];
-  }
+    constructor() {
+        super();
+        this._score = 0;
+    }
 
-  toJSON(): object {
-    return {
-      teams: this.teams.map(t => t.toJSON()),
-      events: this.events.map(e => e.toJSON())
-    };
-  }
+    fromJSON(json: any): TeamSearchResult {
+        const searchItem = new TeamSearchResult();
+        const team = super.fromJSON(json);
+        Object.assign(searchItem, team);
+        searchItem.score = json.score;
+        return searchItem;
+    }
 
-  fromJSON(json: any): SearchResult {
-    const season: SearchResult = new SearchResult();
-    season.teams = json.teams.map((t: any) => new Team().fromJSON(t));
-    season.events = json.events.map((e: any) => new Event().fromJSON(e));
-    return season;
-  }
+    toJSON(): object {
+        const json = super.toJSON() as any;
+        json.score = this.score;
+        return json;
+    }
 
-  get events(): Event[] {
-    return this._events;
-  }
+    get type(): "team" {
+        return "team";
+    }
 
-  set events(value: Event[]) {
-    this._events = value;
-  }
+    get score(): number {
+        return this._score;
+    }
 
-  get teams(): Team[] {
-    return this._teams;
-  }
-
-  set teams(value: Team[]) {
-    this._teams = value;
-  }
+    set score(value: number) {
+        this._score = value;
+    }
 }
+
+export class EventSearchResult extends Event {
+    private _score: number;
+
+    constructor() {
+        super();
+        this._score = 0;
+    }
+
+    fromJSON(json: any): EventSearchResult {
+        const searchItem = new EventSearchResult();
+        const event = super.fromJSON(json);
+        Object.assign(searchItem, event);
+        searchItem.score = json.score;
+        return searchItem;
+    }
+
+    toJSON(): object {
+        const json = super.toJSON() as any;
+        json.score = this.score;
+        return json;
+    }
+
+    get type(): "event" {
+        return "event";
+    }
+
+    get score(): number {
+        return this._score;
+    }
+
+    set score(value: number) {
+        this._score = value;
+    }
+}
+
+type SearchResult = TeamSearchResult | EventSearchResult;
+
+export default SearchResult;
