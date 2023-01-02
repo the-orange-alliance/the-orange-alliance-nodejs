@@ -21,3 +21,4 @@ export { default as Team } from "./Team";
 export { default as TeamSeasonRecord } from "./TeamSeasonRecord";
 export { default as WebAnnouncement } from "./WebAnnouncement";
 export { default as Week } from "./Week";
+export * as myTOA from "./myTOA";

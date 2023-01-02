@@ -26,10 +26,10 @@ import { ISerializable } from "./models/ISerializable";
 import { getMatchDetailsType } from "./models/game-specifics/GameData";
 import {
     GameSpecificInsights,
-    getInsights,
     getInsightsType,
 } from "./models/game-specifics/InsightsData";
 import SearchResult, { EventSearchResult, TeamSearchResult } from "./models/SearchResult";
+import User from "./models/myTOA/User";
 
 let api_endpoint = "https://theorangealliance.org/api";
 
@@ -82,6 +82,28 @@ export class API {
 
         let data = fetch(api_endpoint + url + query_params, {
             headers: this.headers(),
+        })
+            .then((res: any) => res.text())
+            .catch((err: any) => {
+                throw new Error(err);
+            });
+        return await data;
+    }
+
+    /**
+     * Make a web request to the api endpoint specified. Will return the text gotten from the endpoint.
+     * @param url the api endpoint to call
+     * @param key: firebase key
+     * @param headers any headers that should be sent with the request
+     */
+    private async fetchFirebase(subUrl: string, key: string, headers?: {[key: string]: string}): Promise<string> {
+        if (subUrl.charAt(0) !== "/") {
+            // If there is no leading slash, add one
+            subUrl = "/" + subUrl;
+        }
+
+        let data = fetch(api_endpoint + "/users" + subUrl, {
+            headers: {...this.headers(), ...headers, "Authorization":"Bearer " + key},
         })
             .then((res: any) => res.text())
             .catch((err: any) => {
@@ -722,5 +744,20 @@ export class API {
                 return new EventSearchResult().fromJSON(value)
             }
         });
+    }
+
+    // myTOA Endpoints
+
+    // /api/user
+    /**
+     * Get the current myTOA user's information
+     * @param key firebase API key
+     * @returns who you are
+     */
+    async user(key: string): Promise<User> {
+        const responseData = await this.fetchFirebase(`/`, key)
+        const res = JSON.parse(responseData);
+
+        return new User().fromJSON(res);
     }
 }
