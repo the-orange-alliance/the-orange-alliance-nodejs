@@ -136,7 +136,9 @@ export class API {
         responseData: string
     ): T[] {
         let res: [any] = JSON.parse(responseData);
-        let x = res.map((value) => new c().fromJSON(value) as T);
+        let x = res
+            .filter((v) => v !== null)
+            .map((value) => new c().fromJSON(value) as T);
         return x;
     }
 
