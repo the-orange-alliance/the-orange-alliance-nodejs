@@ -6,6 +6,7 @@ import RelicRecoveryMatchDetails from "./1718/RelicRecoveryMatchDetails";
 import RoverRuckusMatchDetails from "./1819/RoverRuckusMatchDetails";
 import SkystoneMatchDetails from "./1920/SkystoneMatchDetails";
 import PowerPlayMatchDetails from "./2223/PowerPlayMatchDetails";
+import CenterstageMatchDetails from "./2324/MatchDetails";
 
 export type GameSpecificDetails =
     | UltimateGoalMatchDetails
@@ -14,7 +15,8 @@ export type GameSpecificDetails =
     | RelicRecoveryMatchDetails
     | RoverRuckusMatchDetails
     | SkystoneMatchDetails
-    | PowerPlayMatchDetails;
+    | PowerPlayMatchDetails
+    | CenterstageMatchDetails;
 
 export function getMatchDetails(seasonKey: string): MatchDetails {
     const matchDtlType = getMatchDetailsType(seasonKey);
@@ -37,6 +39,8 @@ export function getMatchDetailsType(seasonKey: string): typeof MatchDetails {
             return FreightFrenzyMatchDetails;
         case "2223":
             return PowerPlayMatchDetails;
+        case "2324":
+            return CenterstageMatchDetails;
         default:
             return MatchDetails;
     }

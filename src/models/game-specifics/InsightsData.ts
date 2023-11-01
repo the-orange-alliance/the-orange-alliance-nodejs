@@ -5,6 +5,7 @@ import SkystoneInsights from "./1920/SkystoneInsights";
 import RelicRecoveryInsights from "./1718/RelicRecoveryInsights";
 import RoverRuckusInsights from "./1819/RoverRuckusInsights";
 import PowerPlayInsights from "./2223/PowerPlayInsights";
+import CenterstageInsights from "./2324/Insights";
 
 export type GameSpecificInsights =
   | FreightFrenzyInsights
@@ -13,6 +14,7 @@ export type GameSpecificInsights =
   | RelicRecoveryInsights
   | RoverRuckusInsights
   | PowerPlayInsights
+  | CenterstageInsights
   | Insights;
 
 export function getInsights(seasonKey: string): Insights {
@@ -36,6 +38,8 @@ export function getInsightsType(seasonKey: string): GameSpecificInsights {
       return new FreightFrenzyInsights();
     case "2223":
       return new PowerPlayInsights();
+    case "2324":
+      return new CenterstageInsights();
     default:
       return new Insights();
   }
