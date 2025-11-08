@@ -7,6 +7,8 @@ import RoverRuckusMatchDetails from "./1819/RoverRuckusMatchDetails";
 import SkystoneMatchDetails from "./1920/SkystoneMatchDetails";
 import PowerPlayMatchDetails from "./2223/PowerPlayMatchDetails";
 import CenterstageMatchDetails from "./2324/MatchDetails";
+import IntoTheDeepMatchDetails from "./2425/MatchDetails";
+import DecodeMatchDetails from "./2526/MatchDetails";
 
 export type GameSpecificDetails =
     | UltimateGoalMatchDetails
@@ -16,7 +18,9 @@ export type GameSpecificDetails =
     | RoverRuckusMatchDetails
     | SkystoneMatchDetails
     | PowerPlayMatchDetails
-    | CenterstageMatchDetails;
+    | CenterstageMatchDetails
+    | IntoTheDeepMatchDetails
+    | DecodeMatchDetails;
 
 export function getMatchDetails(seasonKey: string): MatchDetails {
     const matchDtlType = getMatchDetailsType(seasonKey);
@@ -41,6 +45,10 @@ export function getMatchDetailsType(seasonKey: string): typeof MatchDetails {
             return PowerPlayMatchDetails;
         case "2324":
             return CenterstageMatchDetails;
+        case "2425":
+            return IntoTheDeepMatchDetails;
+        case "2526":
+            return DecodeMatchDetails;
         default:
             return MatchDetails;
     }
